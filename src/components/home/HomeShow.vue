@@ -13,11 +13,7 @@
     </el-col>
   </el-row>
 </template>
- 
- </el-row>
 
-
-</template>
 
 
 <script>
