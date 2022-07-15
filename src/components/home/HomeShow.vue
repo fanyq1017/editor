@@ -3,6 +3,7 @@
     <el-col>
       <div v-html="content"></div>
       <div>{{ this.$route.query.id }}</div>
+      <EchartsMap/>
     </el-col>
     <el-col>
       <el-carousel indicator-position="outside">
@@ -13,15 +14,13 @@
     </el-col>
   </el-row>
 </template>
- 
- </el-row>
 
-
-</template>
 
 
 <script>
+import EchartsMap from "@/components/home/echartMap";
 export default {
+  components: {EchartsMap},
   name: "HomeShow",
   data() {
     return {
