@@ -6,6 +6,7 @@
       v-model="article.mdContent"
       style="min-height: 500px"
       @imgAdd="imageAdd"
+
       @imgDel="imageDel"
       @save="articleSave"
     >
@@ -108,14 +109,14 @@ export default {
       console.log("已保存");
     },
 
-  
+
     getArticle() {
       console.log("点我");
       var params = {aid:2}
       axios({
         method: "GET",
         url:"http://10.134.48.4:8080/article/2",
-  
+
       }).then(
         (response) => {
           console.log(response.data.data)

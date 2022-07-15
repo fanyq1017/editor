@@ -27,6 +27,12 @@ const routes = [
                 name:'message',
                 component:() => import('../components/message/MessageShow.vue')
 
+            },
+            {
+                path: '/activity',
+                name:'activity',
+                component:() => import('../components/activity/ActivityShow.vue')
+
             }
         ]
     },
