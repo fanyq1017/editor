@@ -37,6 +37,8 @@
 
 <script>
 import { mavonEditor } from "mavon-editor";
+import { postRequest } from "../../utils/api";
+import { uploadFileRequest } from "../../utils/api";
 import axios from "axios";
 import "mavon-editor/dist/css/index.css";
 export default {
@@ -73,14 +75,7 @@ export default {
       var formdata = new FormData();
       formdata.append("image", $file);
 
-      axios({
-        method: "POST",
-        url: "http://10.132.50.27:8080/article/uploadimg",
-        data: formdata,
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }).then(
+      uploadFileRequest("/article/uploadimg", formdata).then(
         (response) => {
           console.log(response.data.data);
           _this.$refs.md.$imglst2Url([[pos, response.data.data]]);
@@ -98,33 +93,12 @@ export default {
         mdContent: this.article.mdContent,
         htmlContent: this.$refs.md.d_render,
         state: "1",
-        type: "",
+        type: "1",
       };
 
       console.log(data);
 
-      axios({
-        method: "POST",
-        url: "http://10.132.50.27:8080/article/addArticle",
-        data: data,
-        transformRequest: [
-          function (data) {
-            // Do whatever you want to transform the data
-            let ret = "";
-            for (let it in data) {
-              ret +=
-                encodeURIComponent(it) +
-                "=" +
-                encodeURIComponent(data[it]) +
-                "&";
-            }
-            return ret;
-          },
-        ],
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      }).then(
+      postRequest("/article/addArticle", da).then(
         (response) => {
           console.log(response);
         },

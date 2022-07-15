@@ -1,70 +1,94 @@
 <template>
-<div>
-  <el-form
-    :rules="rules"
-    class="login-container"
-    label-position="left"
-    label-width="0px"
-    v-loading="loading"
-  >
-    <h3 class="login_title">系统登录</h3>
-    <el-form-item prop="account">
-      <el-input
-        type="text"
-        v-model="loginForm.username"
-        auto-complete="off"
-        placeholder="账号"
-      ></el-input>
-    </el-form-item>
-    <el-form-item prop="checkPass">
-      <el-input
-        type="password"
-        v-model="loginForm.password"
-        auto-complete="off"
-        placeholder="密码"
-      ></el-input>
-    </el-form-item>
-    <el-checkbox class="login_remember" v-model="checked" label-position="left"
-      >记住密码</el-checkbox
+  <div>
+    <el-form
+      :rules="rules"
+      class="login-container"
+      label-position="left"
+      label-width="0px"
     >
-    <el-form-item style="width: 100%">
-      <el-button
-        type="primary"
-        @click.native.prevent="submitClick"
-        style="width: 100%"
-        >登录</el-button
+      <h3 class="login_title">系统登录</h3>
+      <el-form-item prop="account">
+        <el-input
+          type="text"
+          v-model="loginForm.username"
+          auto-complete="off"
+          placeholder="账号"
+        ></el-input>
+      </el-form-item>
+      <el-form-item prop="checkPass">
+        <el-input
+          type="password"
+          v-model="loginForm.password"
+          auto-complete="off"
+          placeholder="密码"
+        ></el-input>
+      </el-form-item>
+      <el-checkbox
+        class="login_remember"
+        v-model="checked"
+        label-position="left"
+        >记住密码</el-checkbox
       >
-    </el-form-item>
-    <el-form-item style="width: 100%">
-      <el-button
-        type="primary"
-        @click="dialogFormVisible = true"
-        style="width: 100%"
-        >注册</el-button
-      >
-    </el-form-item>
-  </el-form>
+      <el-form-item style="width: 100%">
+        <el-button
+          type="primary"
+          @click.native.prevent="submitClick"
+          style="width: 100%"
+          >登录</el-button
+        >
+      </el-form-item>
+      <el-form-item style="width: 100%">
+        <el-button
+          type="primary"
+          @click="dialogFormVisible = true"
+          style="width: 100%"
+          >注册</el-button
+        >
+      </el-form-item>
+    </el-form>
 
-  <el-dialog title="收货地址" :visible.sync="dialogFormVisible">
-  <el-form :model="form">
-    <el-form-item label="活动名称" :label-width="formLabelWidth">
-      <el-input v-model="form.name" autocomplete="off"></el-input>
-    </el-form-item>
-    <el-form-item label="活动区域" :label-width="formLabelWidth">
-      <el-select v-model="form.region" placeholder="请选择活动区域">
-        <el-option label="区域一" value="shanghai"></el-option>
-        <el-option label="区域二" value="beijing"></el-option>
-      </el-select>
-    </el-form-item>
-  </el-form>
-  <div slot="footer" class="dialog-footer">
-    <el-button @click="dialogFormVisible = false">取 消</el-button>
-    <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+    <el-dialog
+      title="用户注册"
+      :visible.sync="dialogFormVisible"
+      center
+      width="400px"
+    >
+      <el-form :rules="rules" label-position="left" :model="regForm">
+        <el-form-item
+          prop="account"
+          label="用户名"
+          :label-width="formLabelWidth"
+        >
+          <el-input v-model="regForm.username" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item
+          prop="checkPass"
+          label="密码"
+          :label-width="formLabelWidth"
+        >
+          <el-input
+            type="password"
+            v-model="regForm.password"
+            autocomplete="off"
+          ></el-input>
+        </el-form-item>
+        <el-form-item
+          prop="checkPhone"
+          label="电话号码"
+          :label-width="formLabelWidth"
+        >
+          <el-input v-model="regForm.telephone" autocomplete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="register">注册</el-button>
+      </div>
+    </el-dialog>
   </div>
-</el-dialog>
-</div>
 </template>
 <script>
+import  {postRequest}  from "../utils/api"
 import axios from "axios";
 export default {
   data() {
@@ -72,6 +96,9 @@ export default {
       rules: {
         account: [{ required: true, message: "请输入用户名", trigger: "blur" }],
         checkPass: [{ required: true, message: "请输入密码", trigger: "blur" }],
+        checkPhone: [
+          { required: true, message: "请输入密码", trigger: "blur" },
+        ],
       },
       checked: true,
       loginForm: {
@@ -80,92 +107,43 @@ export default {
       },
       loading: false,
       dialogFormVisible: false,
-      form: {
-        name: "",
-        region: "",
-        date1: "",
-        date2: "",
-        delivery: false,
-        type: [],
-        resource: "",
-        desc: "",
+
+      regForm: {
+        username: "",
+        password: "",
+        telephone: "",
       },
-      formLabelWidth: "120px",
+      formLabelWidth: "150px",
     };
   },
   methods: {
     submitClick: function () {
       var _this = this;
-      this.loading = true;
 
-      let data = {
-        username: "fyq",
-        password: "123456",
-      };
-
-      console.log(data);
-
-      axios({
-        method: "POST",
-        url: "http://10.132.50.27/login",
-        data: data,
-        transformRequest: [
-          function (data) {
-            // Do whatever you want to transform the data
-            let ret = "";
-            for (let it in data) {
-              ret +=
-                encodeURIComponent(it) +
-                "=" +
-                encodeURIComponent(data[it]) +
-                "&";
-            }
-            return ret;
-          },
-        ],
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      }).then(
+      postRequest('/login', {username : this.loginForm.username , password : this.loginForm.password}).then(
         (response) => {
-          console.log(response);
+          console.log(response.data.state + " " + response.data.data)
         },
         (error) => {
-          console.log(error);
+          console.log(error)
         }
-      );
+      )
+
+
+
     },
 
-    login() {
+
+    register() {
       let data = {
-        username: "fyq",
-        password: "123456",
+        username: this.regForm.username,
+        password: this.regForm.password,
+        telephone: this.regForm.telephone,
       };
 
       console.log(data);
 
-      axios({
-        method: "POST",
-        url: "http://10.132.50.27:8080/login",
-        data: data,
-        transformRequest: [
-          function (data) {
-            // Do whatever you want to transform the data
-            let ret = "";
-            for (let it in data) {
-              ret +=
-                encodeURIComponent(it) +
-                "=" +
-                encodeURIComponent(data[it]) +
-                "&";
-            }
-            return ret;
-          },
-        ],
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      }).then(
+      postRequest('/register', data).then(
         (response) => {
           console.log(response);
         },

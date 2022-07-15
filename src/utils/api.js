@@ -2,7 +2,7 @@ import axios from "axios";
 
 
 
-let base = ''
+let base = 'http://10.134.48.17:8080'
 export const postRequest = (url, params) => {
     return axios({
         method: 'post',
@@ -21,6 +21,10 @@ export const postRequest = (url, params) => {
         }
     });
 }
+
+
+
+
 export const uploadFileRequest = (url, params) => {
     return axios({
         method: 'post',
@@ -47,7 +51,12 @@ export const putRequest = (url, params) => {
             'Content-Type': 'application/x-www-form-urlencoded'
         }
     });
+
 }
+
+
+
+
 export const deleteRequest = (url) => {
     return axios({
         method: 'delete',

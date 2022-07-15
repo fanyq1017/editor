@@ -7,6 +7,14 @@
 
 <script>
 
+
+
+
+
+
+
+
+
 import ArticleTable from "./ArticleTable.vue";
 export default {
   name: "MessageShow",

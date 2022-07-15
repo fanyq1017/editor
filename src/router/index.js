@@ -42,11 +42,18 @@ const routes = [
         component: () => import('../components/ManageMain'),
         children:[
             {
-                path: '/postarticle',
+                path: '/manage/postarticle',
                 name:' postarticle',
 
                 component:() => import('../components/PostArticle/PostArticle.vue')
-            }
+            },
+
+            {
+                path: '/manage/postactivity',
+                name:' postarticle',
+
+                component:() => import('../components/ManageActivity/ActivityPost.vue')
+            },
         ]
     },
 
