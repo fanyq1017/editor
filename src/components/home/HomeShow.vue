@@ -11,7 +11,9 @@
         </el-carousel-item>
       </el-carousel>
     </el-col>
+    <el-col><h1><a id="1233242articlepnghttp1013250278080img645a486d74034cbdb588684bfefe3620_articlepng_0"></a>1233242<img src="http://10.132.50.27:8080/img/645a486d-7403-4cbd-b588-684bfefe3620_article.png" alt="article.png" /></h1></el-col>
   </el-row>
+  
 </template>
  
  </el-row>
@@ -26,7 +28,7 @@ export default {
   data() {
     return {
       article: {},
-      content: "<h1>test</h1>",
+      content: ' ',
     };
   },
 };

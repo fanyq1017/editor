@@ -33,12 +33,21 @@ const routes = [
     {
         path:'/manage',
         name:'manage',
-        component: () => import('../components/ManageMain')
+        component: () => import('../components/ManageMain'),
+        children:[
+            {
+                path: '/postarticle',
+                name:' postarticle',
+
+                component:() => import('../components/PostArticle/PostArticle.vue')
+            }
+        ]
     },
 
     {
-        path:'login',
-        name:'login'
+        path:'/login',
+        name:'login',
+        component:() =>import('../components/LoginShow.vue')
     }
 ]
 export default new VueRouter({
