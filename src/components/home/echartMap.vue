@@ -256,13 +256,13 @@ export default {
     font-size: 2em;
     font-weight: 1000;
   }
-  li{
+  #summary li{
     display: block;
     height:6em;
     padding-left: 40px;
     background: url(../../assets/heart.bmp) no-repeat left calc(10px); 
   }
-   .top{
+  #summary .top{
     font-size: medium;
     background: none;
     padding-left: 0;
