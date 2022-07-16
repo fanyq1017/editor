@@ -12,7 +12,7 @@
     >
       <el-menu-item index="1" @click="ClickMenu('首页')">首页</el-menu-item>
 
-      <el-menu-item index="3" @click="ClickMenu('志愿活动')"
+      <el-menu-item index="2" @click="ClickMenu('志愿活动')"
         >志愿活动</el-menu-item
       >
       <el-menu-item index="3" @click="ClickMenu('信息动态')"
