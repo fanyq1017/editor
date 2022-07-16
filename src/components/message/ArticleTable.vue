@@ -77,7 +77,7 @@ div.hotpoint-container
 {
   float:left;
   width:30%;
-  height:200px;
+  height:300px;
   padding:10px 30px 20px 0px;
   margin:4% 2% 3% 3%;
   background-color: rgba(220, 220, 220, 0.5);
