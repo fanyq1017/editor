@@ -27,18 +27,40 @@ const routes = [
                 name:'message',
                 component:() => import('../components/message/MessageShow.vue')
 
+            },
+            {
+                path: '/activity',
+                name:'activity',
+                component:() => import('../components/activity/ActivityShow.vue')
+
             }
         ]
     },
     {
         path:'/manage',
         name:'manage',
-        component: () => import('../components/ManageMain')
+        component: () => import('../components/ManageMain'),
+        children:[
+            {
+                path: '/manage/postarticle',
+                name:' postarticle',
+
+                component:() => import('../components/PostArticle/PostArticle.vue')
+            },
+
+            {
+                path: '/manage/postactivity',
+                name:' postarticle',
+
+                component:() => import('../components/ManageActivity/ActivityPost.vue')
+            },
+        ]
     },
 
     {
-        path:'login',
-        name:'login'
+        path:'/login',
+        name:'login',
+        component:() =>import('../components/LoginShow.vue')
     }
 ]
 export default new VueRouter({

@@ -1,25 +1,44 @@
 <template>
-  <div class="markdown-editor">
-     <el-input v-model="article.title" placeholder="请输入标题..." style="width: 400px;margin-left: 10px"></el-input>
+  <el-container class="post-article">
+    <el-header class="header">
+      <el-select
+        v-model="article.type"
+        placeholder="请选择"
+        style="width: px; margin-left: 0"
+      >
+        <el-option
+          v-for="item in options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        >
+        </el-option>
+      </el-select>
+      <el-input
+        v-model="article.title"
+        placeholder="请输入标题..."
+        style="width: 400px; margin-left: 10px"
+      ></el-input>
+    </el-header>
+
     <mavonEditor
       ref="md"
       v-model="article.mdContent"
       style="min-height: 500px"
       @imgAdd="imageAdd"
-
       @imgDel="imageDel"
       @save="articleSave"
     >
     </mavonEditor>
     <el-button @click="getArticle"> 请求</el-button>
-
-
-  </div>
+  </el-container>
 </template>
 
 
 <script>
 import { mavonEditor } from "mavon-editor";
+import { postRequest } from "../../utils/api";
+import { uploadFileRequest } from "../../utils/api";
 import axios from "axios";
 import "mavon-editor/dist/css/index.css";
 export default {
@@ -27,15 +46,25 @@ export default {
   components: { mavonEditor },
   data() {
     return {
+      options: [
+        {
+          label: "志愿风采",
+          value: "1",
+        },
+        {
+          label: "信息动态",
+          value: "2",
+        },
+      ],
       content: "",
       imageFile: {},
       article: {
         id: "-1",
         title: "this is title",
         mdContent: "",
+        type: "",
       },
       articles: [],
-      
     };
   },
   methods: {
@@ -46,14 +75,7 @@ export default {
       var formdata = new FormData();
       formdata.append("image", $file);
 
-      axios({
-        method: "POST",
-        url: "http://10.132.50.27:8080/article/uploadimg",
-        data: formdata,
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }).then(
+      uploadFileRequest("/article/uploadimg", formdata).then(
         (response) => {
           console.log(response.data.data);
           _this.$refs.md.$imglst2Url([[pos, response.data.data]]);
@@ -70,34 +92,13 @@ export default {
         uid: 100,
         mdContent: this.article.mdContent,
         htmlContent: this.$refs.md.d_render,
-        state: 1,
-        type: 1,
+        state: "1",
+        type: "1",
       };
 
       console.log(data);
 
-      axios({
-        method: "POST",
-        url: "http://10.132.50.27:8080/article/addArticle",
-        data: data,
-        transformRequest: [
-          function (data) {
-            // Do whatever you want to transform the data
-            let ret = "";
-            for (let it in data) {
-              ret +=
-                encodeURIComponent(it) +
-                "=" +
-                encodeURIComponent(data[it]) +
-                "&";
-            }
-            return ret;
-          },
-        ],
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      }).then(
+      postRequest("/article/addArticle", da).then(
         (response) => {
           console.log(response);
         },
@@ -109,22 +110,18 @@ export default {
       console.log("已保存");
     },
 
-
     getArticle() {
       console.log("点我");
-      var params = {aid:2}
+      var params = { aid: 2 };
       axios({
         method: "GET",
-        url:"http://10.134.48.4:8080/article/2",
-
+        url: "http://10.134.48.4:8080/article/2",
       }).then(
         (response) => {
-          console.log(response.data.data)
-
+          console.log(response.data.data);
         },
         (error) => {
-          console.log("error")
-
+          console.log("error");
         }
       );
     },
@@ -133,8 +130,14 @@ export default {
 </script>
 
 
-<style>
-.markdown-editor {
-  margin-top: 20px;
+<style  scoped>
+.post-article > .header {
+  background-color: #ececec;
+  margin-top: 0;
+  padding-left: 5px;
+  display: flex;
+  justify-content: flex-start;
 }
 </style>
+
+
