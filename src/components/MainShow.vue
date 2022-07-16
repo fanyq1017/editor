@@ -5,12 +5,12 @@
         <header-show></header-show>
       </el-header>
       <el-main class="ma">
-        
+
         <router-view></router-view>
-    
+
       </el-main>
       <el-footer class="foo">
-        <login-page></login-page>
+        <footer-style></footer-style>
       </el-footer>
     </el-container>
   </div>
@@ -20,17 +20,17 @@
 <script>
 import HeaderShow from "./HeaderShow.vue";
 
-import loginPage from "./footerStyle.vue"
+import footerStyle from "./footerStyle.vue"
 export default {
   name: "MainShow",
-  components: { HeaderShow ,  loginPage},
+  components: { HeaderShow ,  footerStyle},
 };
 </script>
 
 
 <style  scope>
 .header {
-  background-color: orangered;
+  background-color: #ffffff;
   margin: 0;
   padding: 0;
 }

@@ -19,11 +19,7 @@
           <el-menu-item index="资讯列表">资讯列表</el-menu-item>
           <el-menu-item index="发布资讯"  @click="ClickMenu('发布资讯')">发布资讯</el-menu-item>
 
-        </el-menu-item-group>
-
       </el-submenu>
-
-
           <el-submenu index="志愿活动管理">
         <template slot="title">
           <i class="el-icon-location"></i>
@@ -31,9 +27,6 @@
         </template>
           <el-menu-item index="活动列表" @click="ClickMenu('活动列表')">活动列表</el-menu-item>
           <el-menu-item index="发布活动"  @click="ClickMenu('发布活动')">发布活动</el-menu-item>
-
-        </el-menu-item-group>
-
       </el-submenu>
 
 

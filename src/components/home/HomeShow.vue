@@ -1,20 +1,47 @@
 <template>
-  <el-row>
-    <el-col>
-      <div v-html="content"></div>
-      <div>{{ this.$route.query.id }}</div>
-      <EchartsMap/>
-    </el-col>
-    <el-col>
-      <el-carousel indicator-position="outside">
+  <el-row gutter="30">
+    <el-row>
+      <el-col style="text-align: center;height: 70px;padding-top: 10px">
+        <span  class="leadnews" style="color: #f6a598">头条 : </span>
+        <span class="leadnews" style="color: #e81928" >习近平总书记考察河北纪实</span>
+      </el-col>
+      <el-col style="text-align: center;height:30px" class="brief">
+        来源：新华社8月23日至24日，中共中央总书记、国家主席、中央军委主席习近平在河北省承德市考察。
+      </el-col>
+      <el-col style="text-align: center;color: #f36663">
+   ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      </el-col>
+    </el-row>
+    <el-col :span="10" offset="2" >
+      <el-carousel height="450px">
         <el-carousel-item v-for="item in 4" :key="item">
-          <h3>{{ item }}</h3>
+          <h3 class="medium">{{ item }}</h3>
         </el-carousel-item>
       </el-carousel>
     </el-col>
-    <el-col><h1><a id="1233242articlepnghttp1013250278080img645a486d74034cbdb588684bfefe3620_articlepng_0"></a>1233242<img src="http://10.132.50.27:8080/img/645a486d-7403-4cbd-b588-684bfefe3620_article.png" alt="article.png" /></h1></el-col>
+    <el-col :span="10">
+      <el-row style="padding-top: 10px">
+        <img src="../../assets/toutiao.png"><span class="leadnews" style="padding-left: 20px">文明XX新闻动态</span>
+      </el-row>
+      <el-col>
+        <el-table
+            :data="articles"
+            style="width: 100%">
+          <el-table-column
+              prop="title"
+              width="480">
+            <template slot-scope="scope"><span style="color: #409eff;cursor: pointer" @click="itemClick(scope.row)">{{ scope.row.title}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column
+              prop="date"
+              width="180">
+          </el-table-column>
+        </el-table>
+      </el-col>
+    </el-col>
+    <EchartsMap/>
   </el-row>
-  
 </template>
 
 
@@ -22,11 +49,18 @@
 <script>
 import EchartsMap from "@/components/home/echartMap";
 export default {
+  methods:{
+    itemClick(row){
+        this.$router.push({path:/articledetail})
+  },
   components: {EchartsMap},
   name: "HomeShow",
   data() {
     return {
-      article: {},
+      articles: [{title: "111",date:"2022-7-1",id:"19"},
+        {title: "222",date: "2022-7-2",id: "234567"},
+        {title: "333",date: "2022-7-3",id: "345678"}
+      ],
       content: ' ',
     };
   },
@@ -48,5 +82,13 @@ export default {
 
 .el-carousel__item:nth-child(2n + 1) {
   background-color: #d3dce6;
+}
+.leadnews{
+  font-weight: bold;
+  font-size: 28px;
+  font-family: "Arial Rounded MT Bold";
+}
+.brief{
+  font-size: small;
 }
 </style>
