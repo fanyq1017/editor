@@ -2,7 +2,7 @@
   <el-container class="post-activity" style="height: 1000px">
     <el-header class="header">
       <span> 选择活动地址 </span>
-      <regin-selector> </regin-selector>
+      <regin-selector @changeregin="changeregin($event)"> </regin-selector>
 
       <span style="margin-left: 20px">选择活动日期</span>
 
@@ -31,7 +31,9 @@
         </el-upload>
       </el-col>
 
-      <el-col :span="12"> hhh </el-col>
+      <el-col :span="12">
+        <el-button @click="test"> test </el-button>
+      </el-col>
     </el-row>
   </el-container>
 </template>
@@ -48,7 +50,17 @@ export default {
   components: { reginSelector },
 
   data() {
-    return {};
+    return {
+      region: [],
+    };
+  },
+  methods: {
+    test() {},
+
+    changeregin(data){
+      this.region = data
+      console.log(data + "拿到了") 
+    }
   },
 };
 </script>
@@ -63,31 +75,29 @@ export default {
   justify-content: flex-start;
 }
 
-
-
-  .avatar-uploader .el-upload {
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-  }
-  .avatar-uploader .el-upload:hover {
-    border-color: #409EFF;
-  }
-  .avatar-uploader-icon {
-    font-size: 28px;
-    color: #8c939d;
-    width: 178px;
-    height: 178px;
-    line-height: 178px;
-    text-align: center;
-  }
-  .avatar {
-    width: 178px;
-    height: 178px;
-    display: block;
-  }
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409eff;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+}
 </style>
 
 
