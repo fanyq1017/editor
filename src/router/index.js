@@ -33,6 +33,12 @@ const routes = [
                 name:'activity',
                 component:() => import('../components/activity/ActivityShow.vue')
 
+            },
+            {
+                path: '/articledetail',
+                name:'activity',
+                component:() => import('../components/article/ArticleDetail.vue')
+
             }
         ]
     },
