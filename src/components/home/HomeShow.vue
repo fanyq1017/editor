@@ -30,7 +30,7 @@
           <el-table-column
               prop="title"
               width="480">
-            <template slot-scope="scope"><span style="color: #409eff;cursor: pointer" @click="itemClick(scope.row)">{{ scope.row.title}}</span>
+           <template slot-scope="scope"><span style="color: #409eff;cursor: pointer" @click="itemClick(scope.row)">{{ scope.row.title}}</span>
             </template>
           </el-table-column>
           <el-table-column
@@ -49,22 +49,28 @@
 <script>
 import EchartsMap from "@/components/home/echartMap";
 export default {
-  methods:{
-    itemClick(row){
-        this.$router.push({path:/articledetail})
+  methods: {
+    itemClick(row) {
+      this.$router.push({
+        path: "/articledetail",
+        query: {id: row.id}
+      })
+    }
   },
+
+
   components: {EchartsMap},
-  name: "HomeShow",
-  data() {
-    return {
-      articles: [{title: "111",date:"2022-7-1",id:"19"},
-        {title: "222",date: "2022-7-2",id: "234567"},
-        {title: "333",date: "2022-7-3",id: "345678"}
-      ],
-      content: ' ',
-    };
-  },
-};
+    name: "HomeShow",
+    data() {
+      return {
+        articles: [{title: "111", date: "2022-7-1", id: "19"},
+          {title: "222", date: "2022-7-2", id: "234567"},
+          {title: "333", date: "2022-7-3", id: "345678"}
+        ],
+        content: ' ',
+      };
+    },
+}
 </script>
 
 <style>
