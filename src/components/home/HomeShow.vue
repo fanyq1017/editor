@@ -14,8 +14,8 @@
     </el-row>
     <el-col :span="10" offset="2" >
       <el-carousel height="450px">
-        <el-carousel-item v-for="item in 4" :key="item">
-          <h3 class="medium">{{ item }}</h3>
+        <el-carousel-item v-for="item in carousel_items" :key="item.url">
+          <img src="item.url">
         </el-carousel-item>
       </el-carousel>
     </el-col>
@@ -29,12 +29,12 @@
             style="width: 100%">
           <el-table-column
               prop="title"
-              width="480">
+              width="400">
            <template slot-scope="scope"><span style="color: #409eff;cursor: pointer" @click="itemClick(scope.row)">{{ scope.row.title}}</span>
             </template>
           </el-table-column>
           <el-table-column
-              prop="date"
+              prop="publishDate"
               width="180">
           </el-table-column>
         </el-table>
@@ -64,10 +64,12 @@ export default {
     name: "HomeShow",
     mounted() {
       console.log('mouted')
-
+      var _this = this
       getRequest("/article/all?state=1&page=1&count=5&type=-1").then(
           (response) => {
             console.log(response.data.data)
+
+            _this.articles = response.data.data.records
 
 
           }
@@ -81,6 +83,11 @@ export default {
         articles: [{title: "111", date: "2022-7-1", id: "36"},
           {title: "222", date: "2022-7-2", id: "234567"},
           {title: "333", date: "2022-7-3", id: "345678"}
+        ],
+        carousel_items:[
+          {url:require("../../assets/carousel1.png")},
+          {url:require("../../assets/carousel2.jpeg")},
+
         ],
         content: ' ',
       };
