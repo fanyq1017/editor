@@ -1,8 +1,6 @@
 import axios from "axios";
 
-
-
-let base = 'http://10.134.48.17:8080'
+let base = 'http://10.132.49.13:8080'
 export const postRequest = (url, params) => {
     return axios({
         method: 'post',
@@ -21,10 +19,6 @@ export const postRequest = (url, params) => {
         }
     });
 }
-
-
-
-
 export const uploadFileRequest = (url, params) => {
     return axios({
         method: 'post',
@@ -35,48 +29,11 @@ export const uploadFileRequest = (url, params) => {
         }
     });
 }
-export const putRequest = (url, params) => {
-    return axios({
-        method: 'put',
-        url: `${base}${url}`,
-        data: params,
-        transformRequest: [function (data) {
-            let ret = ''
-            for (let it in data) {
-                ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
-            }
-            return ret
-        }],
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        }
-    });
-
-}
 
 
-
-
-export const deleteRequest = (url) => {
-    return axios({
-        method: 'delete',
-        url: `${base}${url}`
-    });
-}
-export const getRequest = (url, params) => {
+export const getRequest = (url) => {
     return axios({
         method: 'get',
-        data: params,
-        transformRequest: [function (data) {
-            let ret = ''
-            for (let it in data) {
-                ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
-            }
-            return ret
-        }],
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
         url: `${base}${url}`
     });
 }

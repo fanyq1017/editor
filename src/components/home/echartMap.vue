@@ -2,7 +2,7 @@
 <div id="container">
 <div id="china_map" style='width:1000px;height:600px;'> </div>
 <ul id="summary">
-  <li class="top"><span style="color:rgb(215, 7, 7);">中国</span>志愿服务数据统计</li>
+  <li class="top" style="font-size: 18px"><span style="color:rgb(215, 7, 7);">中国</span>志愿服务数据统计</li>
   <li><span class="red">{{totalNumber}}</span><br>实名志愿者总数(人)</li>
   <li><span class="red">{{teamNumber}}</span><br>志愿队伍队伍总数(个)</li>
   <li><span class="red">{{projectNumber}}</span><br>志愿项目总数(个)</li>
@@ -260,10 +260,10 @@ export default {
     display: block;
     height:6em;
     padding-left: 40px;
-    background: url(../../assets/heart.bmp) no-repeat left calc(10px); 
+    background: url(../../assets/heart.bmp) no-repeat left calc(10px);
   }
   #summary .top{
-    font-size: medium;
+    font-size: large;
     background: none;
     padding-left: 0;
     height: 5em;

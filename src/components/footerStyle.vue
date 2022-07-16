@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name: "loginPage"
+  name: "footerStyle"
 }
 </script>
 

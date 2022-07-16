@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <el-cascader
+    <el-cascader ref="cascader"
       size="large"
       :options="options"
       v-model="selectedOptions"
@@ -40,6 +40,7 @@
     },
       handleChange (value) {
 	      console.log(value)
+        this.$emit('changeregin', value)
 	      this.getCodeToText(null, value)
 	    },
 	   getCodeToText (codeStr, codeArray) {

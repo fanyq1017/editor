@@ -1,28 +1,53 @@
-<template>
-  <div>
-    <h1>这是首页</h1>
-    <el-menu
-      :default-active="2"
-      class="el-menu-demo"
-      mode="horizontal"
-      @select="handleSelect"
-      background-color="#545c64"
-      text-color="#fff"
-      active-text-color="#ffd04b"
-    >
-      <el-menu-item index="1" @click="ClickMenu('首页')">首页</el-menu-item>
+<template xmlns:el-col="http://www.w3.org/1999/html">
+  <el-row class="topbar">
+    <el-col :span="10">
+      <el-menu
+          :default-active="1"
+          class="el-menu-demo"
+          mode="horizontal"
+          background-color="#ffffff"
+          text-color="#000000"
+          active-text-color="#f6a598"
+      >
+        <el-menu-item><img src="../assets/logo.jpg" class="user-img"/></el-menu-item>
+        <el-menu-item ><span style="font-size: 20px">志 愿 者 服 务 系 统</span></el-menu-item>
+      </el-menu>
+    </el-col>
+    <el-col :span="12">
+      <el-menu
+        :default-active="1"
+        class="el-menu-demo"
+        mode="horizontal"
+        background-color="#ffffff"
+        text-color="#000000"
+        active-text-color="#f6a598"
+      >
+        <el-menu-item index="1" @click="ClickMenu('首页')">首页</el-menu-item>
 
-      <el-menu-item index="2" @click="ClickMenu('志愿活动')"
-        >志愿活动</el-menu-item
+        <el-menu-item index="2" @click="ClickMenu('志愿活动')"
+          >志愿活动</el-menu-item
+        >
+        <el-menu-item index="3" @click="ClickMenu('信息动态')"
+          >信息动态</el-menu-item
+        >
+        <el-menu-item index="4" @click="ClickMenu('编辑测试')"
+          >编辑测试</el-menu-item
+        >
+      </el-menu>
+    </el-col>
+    <el-col :span ="2">
+      <el-menu
+          :default-active="1"
+          class="el-menu-demo"
+          mode="horizontal"
+          background-color="#ffffff"
+          text-color="#000000"
+          active-text-color="#f6a598"
       >
-      <el-menu-item index="3" @click="ClickMenu('信息动态')"
-        >信息动态</el-menu-item
-      >
-      <el-menu-item index="4" @click="ClickMenu('编辑测试')"
-        >编辑测试</el-menu-item
-      >
+      <el-menu-item type="info" @click="ClickMenu('登录')">登录 / 注册</el-menu-item>
     </el-menu>
-  </div>
+    </el-col>
+  </el-row>
 </template>
 
 
@@ -57,6 +82,11 @@ export default {
             path: "/editor",
           });
           break;
+        case "登录":
+          this.$router.push({
+            path: "/login",
+          });
+          break;
         case "信息动态":
             console.log("点击信息动态")
           this.$router.push({
@@ -71,11 +101,20 @@ export default {
 
 
 <style  scoped>
-h1 {
-  margin: 0;
-  padding: 0;
+
+.topbar{
+  position:fixed;
+  width:100%;
+  z-index:10;
 }
 .el-menu-demo {
   width: 100%;
+}
+.contact-info{
+  padding:60px 0;
+}
+.user-img {
+  height: 61px;
+  cursor: pointer;
 }
 </style>
