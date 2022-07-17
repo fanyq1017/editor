@@ -5,7 +5,13 @@
         <div class="regins-container">
             <!-- <reginSelector></reginSelector> -->
             <div class="regins-first">
-                <a class="regin-first" href="javascript:void(0)" v-for="regin in opitions" :id="regin.value" @click="handleClick(regin.value)">
+                <a class="regin-first" href="javascript:void(0)" v-for="regin in opitions" :id="regin.value" @click="handleTopClick(regin)">
+                    {{regin.label}}
+                </a>
+            </div>
+            <div class="regins-second" id="regins-second">
+                <h6 style="margin-left:8px; font-weight: bold;">市区</h6>
+                <a class="regin-second" href="javascript:void(0)" v-for="regin in second_opitions" :id="regin.value" @click="handleSecondClick(regin)">
                     {{regin.label}}
                 </a>
             </div>
@@ -29,16 +35,21 @@
 </template>
 
 <script>
+'use strict';
 import activityEvent from './ActivityEvent.vue';
 import reginSelector from './ReginSelector.vue';
 import { getRequest } from '../../utils/api.js';
 import { regionData, CodeToText, TextToCode } from 'element-china-area-data'
 
+var cur_dom;
+var cur_second_dom;
+
 export default {
     data() {
         return {
-            selectedRigin:[],
+            selectedRegions:[],
             opitions:regionData,
+            second_opitions:[],
             events: [
                 {
                     activityImg: 'https://chinavolunteer.mca.gov.cn/NVSI/LEAP/site/static/img/10.f055224.png',
@@ -71,13 +82,86 @@ export default {
                 // console.log(response.data.data);
                 _this.events = response.data.data.records;
             }
-        )
+        );
+        // console.log('init' + Array.isArray(this.selectedRegions));
+        
+        // 初始化选中区域
+        {
+            cur_dom = document.getElementById(110000);
+            cur_dom.className = 'regin-first active';
+            this.selectedRegions.push(110000);
+        }
+        // 初始化二级区域
+        {
+            cur_second_dom = document.getElementById(110000);
+            cur_second_dom.className = 'regin-first active';
+            this.selectedRegions.push(110000);
+        }
+
     },
     methods: {
-        handleClick(id)
+        handleTopClick(regin)
         {
-            console.log('handleClick of obj:' + id);
-            document.getElementById(id).className = 'regin-first active';
+            console.log('id of clicked:' + regin.value + ' id of cur: ' + cur_dom.id);
+
+            // 重置选中地区
+            {
+                cur_dom.className = 'regin-first'; //清除当前选中地区
+                cur_second_dom.className = 'regin-second'; //清除当前选中二级地区
+                // console.log(this.selectedRegions.length);
+                var length = this.selectedRegions.length;
+                for(var i = 0; i < length; i++)
+                {
+                    this.selectedRegions.pop();
+                }
+                
+                cur_dom = document.getElementById(regin.value);
+                cur_dom.className = 'regin-first active';
+                this.selectedRegions.push(regin.value);
+
+                if(regin.children.length > 1)
+                {
+                    console.log(typeof document.getElementById('regins-second'));
+                    document.getElementById('regins-second').style.display = 'block';
+                }
+                else
+                {
+                    document.getElementById('regins-second').style.display = 'none';
+                }
+
+                var length = this.second_opitions.length;
+                for(var i = 0; i < length; i++)
+                {
+                    console.log('second_opitions poping...' + this.second_opitions.length);
+                    this.second_opitions.pop();
+                }
+                for(var i = 0; i < regin.children.length; i++)
+                {
+                    console.log('second_opitions pushing...' + this.second_opitions.length);
+                    this.second_opitions.push(regin.children[i]);
+                }
+
+                
+            }
+        },
+        handleSecondClick(regin)
+        {
+            console.log('id of clicked_second:' + regin.value + ' id of cur_second: ' + cur_second_dom.id);
+
+            // 重置选中地区
+            {
+                cur_second_dom.className = 'regin-second'; //清除当前选中二级地区
+                // console.log(this.selectedRegions.length);
+                var length = this.selectedRegions.length;
+                for(var i = 1; i < length; i++)
+                {
+                    this.selectedRegions.pop();
+                }
+                
+                cur_second_dom = document.getElementById(regin.value);
+                cur_second_dom.className = 'regin-second active';
+                this.selectedRegions.push(regin.value);
+            }
         }
     }
 }
@@ -103,9 +187,10 @@ export default {
 }
 
 .show-range {
-    background-image: url(../../assets/bk.jpg);
+    background-image: url(../../assets/bk.webp);
     background-repeat: no-repeat;
     background-size: 100%;
+    background-attachment: fixed;
 }
 
 h4.container-title {
@@ -142,6 +227,10 @@ a.regin-first {
     transition: 0.3s;
     text-decoration: none;
     cursor: pointer;
+    &:hover
+    {
+        color:#cc0000;
+    }
 }
 a.regin-first.active
 {
@@ -152,8 +241,38 @@ a.regin-first.active
         color:#fff;
     }
 }
-a.regin-first:hover
+div.regins-second
 {
-    color:#cc0000;
+    font-size: 0;
+    position: relative;
+    box-sizing: border-box;
+    margin: 10px 5px;
+    display: none;
 }
+a.regin-second 
+{
+    font-size: 14px;
+    color: #333;
+    line-height: 1.8;
+    margin: 3 10px 2px 0;
+    padding: 0 7px;
+    display: inline-block;
+    transition: 0.3s;
+    text-decoration: none;
+    cursor: pointer;
+    &:hover
+    {
+        color:#cc0000;
+    }
+}
+a.regin-second.active
+{
+    background: #cc0000;
+    color: #fff;
+    &:hover
+    {
+        color:#fff;
+    }
+}
+
 </style>

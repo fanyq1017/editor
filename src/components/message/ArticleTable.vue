@@ -125,9 +125,10 @@ div.hotpoint-container
 }
 div.row
 {
-  background-image: url(../../assets/bk.jpg);
+  background-image: url(../../assets/bk.webp);
   background-repeat:no-repeat;
   background-size: 100%;
+  background-attachment: fixed;
 }
 div.row:after {
   content: "";
