@@ -50,14 +50,19 @@ export default {
   },
 
   mounted: function () {
-
-    console.log("mou")
+    console.log("mou");
     var id = this.$route.query.id;
 
     var _this = this;
 
     getRequest("/article/query?id=" + id).then((response) => {
-      _this.article = response.data.data
+      _this.article = response.data.data;
+    });
+
+    getRequest("/article/all?state=1&page=1&count=5&type=-1").then((response) => {
+      
+      console.log(response.data.data)
+
     });
   },
 

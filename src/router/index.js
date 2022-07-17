@@ -53,6 +53,12 @@ const routes = [
 
                 component:() => import('../components/PostArticle/PostArticle.vue')
             },
+            {
+                path: '/manage/articletable',
+                name:'articletable',
+
+                component:() => import('../components/PostArticle/ArticleTable')
+            },
 
             {
                 path: '/manage/postactivity',
