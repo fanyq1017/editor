@@ -52,12 +52,9 @@
         align="left"
       >
       </el-table-column>
-      <el-table-column label="操作" align="left" >
+      <el-table-column label="操作" align="left">
         <template slot-scope="scope">
-          <el-button
-            size="mini"
-            @click="handleEdit(scope.$index, scope.row)"
-           
+          <el-button size="mini" @click="handleEdit(scope.$index, scope.row)"
             >编辑
           </el-button>
           <el-button
@@ -70,14 +67,12 @@
             size="mini"
             type="danger"
             @click="handleDelete(scope.$index, scope.row)"
-      
             >删除
           </el-button>
         </template>
       </el-table-column>
     </el-table>
     <div class="blog_table_footer">
-
       <el-pagination
         background
         :page-size="pageSize"
@@ -134,6 +129,14 @@ export default {
         _this.articles = response.data.data.records;
         _this.totalCount = response.data.data.total;
       });
+    },
+    handleSelectionChange(val) {
+      this.selItems = val;
+    },
+    handleDelete(index, row) {
+      console.log(index)
+      console.log(row)
+      
     },
   },
 };
