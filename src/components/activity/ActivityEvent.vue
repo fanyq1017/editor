@@ -6,10 +6,10 @@
                 <img src="../../assets/a.jpeg" />
             </a>
         </div>
-        <h6 class="good-title" v-html="msg.activityName"></h6>
+        <h6 class="good-title" v-html="msg.title"></h6>
         <h3 class="sub-title ellipsis">{{msg.activityInfo}}</h3>
         <div class="ds pa">
-            <y-button text="查看详情" style="margin: 0 5px"></y-button>
+            <y-button text="查看详情" style="margin: 0 5px; margin-top: 10%;"></y-button>
         </div>
     </div>
 </template>
@@ -42,7 +42,7 @@
 }
 
 .good-item {
-    background: rgb(248, 248, 248);
+    background: rgba(248, 248, 248, 0.5);
     width: 25%;
     transition: all .5s;
     height: 430px;

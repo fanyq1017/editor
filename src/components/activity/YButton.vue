@@ -49,7 +49,7 @@
   }
 
   @mixin color($a,$b,$c) {
-    border: 2px solid $a;
+    border: 1px solid $a;
     border-radius: 0px;
     font-size: 16px;
     color: $b;
@@ -76,14 +76,12 @@
 
   // 默认按钮
   .default-btn {
-    @include color(#e1e1e1, #646464, #f9f9f9);
+    @include color(orangered, #646464, rgba(245, 245, 245, 0.6));
     @extend %style;
-    background-image: -webkit-linear-gradient(top, $cf, #f9f9f9);
-    background-image: linear-gradient(180deg, $cf, #ffffff);
+    font-weight: bold;
+    color:orangered;
     &:hover {
-      background-color: #eee;
-      background-image: -webkit-linear-gradient(top, #f5f5f5, #eee);
-      background-image: linear-gradient(180deg, #f5f5f5, #eee);
+      background-color: rgba(255, 176, 176, 0.6);
     }
   }
 
