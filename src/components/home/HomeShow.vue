@@ -42,6 +42,7 @@
           <el-table-column
               prop="publishDate"
               width="180">
+            <template slot-scope="scope"><span style="cursor:pointer" @click="itemClick(scope.row)">{{scope.row.publishDate | formatDate}}}</span></template>
           </el-table-column>
         </el-table>
       </el-col>
