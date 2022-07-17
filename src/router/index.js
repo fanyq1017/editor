@@ -12,7 +12,7 @@ const routes = [
             {
                 path: '/home',
                 name:'home',
-    
+
                 component:() => import('../components/home/HomeShow.vue')
 
             },
@@ -38,7 +38,11 @@ const routes = [
                 path: '/articledetail',
                 name:'activity',
                 component:() => import('../components/article/ArticleDetail.vue')
-
+            },
+            {
+                path: '/wehelp',
+                name:'wehelp',
+                component:() => import('../components/leifeng/weHelp')
             }
         ]
     },

@@ -2,7 +2,7 @@
 <div id="container">
 <div id="china_map" style='width:1000px;height:600px;'> </div>
 <ul id="summary">
-  <li class="top" style="font-size: 18px"><span style="color:rgb(215, 7, 7);">中国</span>志愿服务数据统计</li>
+  <li class="top" style="font-size: 25px;width: 400px" ><span style="color:rgb(215, 7, 7); font-size: larger">中国</span>志愿服务数据统计</li>
   <li><span class="red">{{totalNumber}}</span><br>实名志愿者总数(人)</li>
   <li><span class="red">{{teamNumber}}</span><br>志愿队伍队伍总数(个)</li>
   <li><span class="red">{{projectNumber}}</span><br>志愿项目总数(个)</li>

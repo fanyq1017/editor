@@ -15,13 +15,19 @@
     <el-col :span="10" offset="2" >
       <el-carousel height="450px">
         <el-carousel-item v-for="item in carousel_items" :key="item.url">
-          <img src="item.url">
+          <img v-if="item.url"
+              :src=item.url>
         </el-carousel-item>
       </el-carousel>
     </el-col>
     <el-col :span="10">
       <el-row style="padding-top: 10px">
-        <img src="../../assets/toutiao.png"><span class="leadnews" style="padding-left: 20px">文明XX新闻动态</span>
+        <el-col :span="10">
+          <img src="../../assets/toutiao.png"><span class="leadnews" style="padding-left: 20px">文明XX新闻动态</span>
+        </el-col>
+        <el-col :span="2" offset="10" style="padding-top: 10px">
+          <el-button type="danger" plain icon="el-icon-search" size="small" round @click="more()">更多</el-button>
+        </el-col>
       </el-row>
       <el-col>
         <el-table
@@ -40,7 +46,10 @@
         </el-table>
       </el-col>
     </el-col>
-    <EchartsMap/>
+    <el-col>
+      <el-divider></el-divider>
+      <EchartsMap/>
+    </el-col>
   </el-row>
 </template>
 
@@ -56,6 +65,11 @@ export default {
         path: "/articledetail",
         query: {id: row.id}
       })
+    },
+    more(){
+      this.$router.push({
+        path: "/message",
+      });
     }
   },
 
