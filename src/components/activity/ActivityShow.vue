@@ -2,8 +2,13 @@
     <div class="show-range">
         <br />
         <h4 class="container-title">项目区域</h4>
-        <div class = "regins-container">
-            <reginSelector></reginSelector>
+        <div class="regins-container">
+            <!-- <reginSelector></reginSelector> -->
+            <div class="regins-first">
+                <a class="regin-first" href="javascript:void(0)" v-for="regin in opitions" :id="regin.value" @click="handleClick(regin.value)">
+                    {{regin.label}}
+                </a>
+            </div>
         </div>
 
         <div>
@@ -26,40 +31,30 @@
 <script>
 import activityEvent from './ActivityEvent.vue';
 import reginSelector from './ReginSelector.vue';
-import {getRequest} from '../../utils/api.js';
+import { getRequest } from '../../utils/api.js';
+import { regionData, CodeToText, TextToCode } from 'element-china-area-data'
 
-const cityOptions = ['上海', '北京', '广州', '深圳', '合肥', '成都'];
 export default {
     data() {
         return {
-            checkboxGroup1: ['上海'],
-            cities: cityOptions,
-
+            selectedRigin:[],
+            opitions:regionData,
             events: [
                 {
-                    activityImg: 'C:/Users/21176/Desktop/git/editor/src/assets/a.jpeg',
+                    activityImg: 'https://chinavolunteer.mca.gov.cn/NVSI/LEAP/site/static/img/10.f055224.png',
                     title: '甲活动',
-                    activityInfo: '一个志愿活动'
                 },
                 {
-                    activityImg: '../../assets/b.jpeg',
+                    activityImg: 'https://chinavolunteer.mca.gov.cn/NVSI/LEAP/site/static/img/43.c238c5c.png',
                     title: '乙活动',
-                    activityInfo: '一个志愿活动'
                 },
                 {
-                    activityImg: '../../assets/c.jpeg',
+                    activityImg: 'https://chinavolunteer.mca.gov.cn/NVSI/LEAP/site/static/img/65.18ae6ca.png',
                     title: '丙活动',
-                    activityInfo: '一个志愿活动'
                 },
                 {
-                    activityImg: '../../assets/d.jpeg',
+                    activityImg: 'https://chinavolunteer.mca.gov.cn/NVSI/LEAP/site/static/img/50.0c3f918.png',
                     title: '丁活动',
-                    activityInfo: '一个志愿活动'
-                },
-                {
-                    activityImg: '../../assets/e.jpeg',
-                    title: '戊活动',
-                    activityInfo: '一个志愿活动'
                 }
             ]
         }
@@ -78,6 +73,13 @@ export default {
             }
         )
     },
+    methods: {
+        handleClick(id)
+        {
+            console.log('handleClick of obj:' + id);
+            document.getElementById(id).className = 'regin-first active';
+        }
+    }
 }
 </script>
 
@@ -90,7 +92,7 @@ export default {
 .goods-box {
     >div {
         float: left;
-        border: 1px solid #efefef;
+        border: 1px solid #ffd2bc;
     }
 }
 
@@ -102,24 +104,56 @@ export default {
 
 .show-range {
     background-image: url(../../assets/bk.jpg);
-    background-repeat:no-repeat;
+    background-repeat: no-repeat;
     background-size: 100%;
 }
-h4.container-title
-{
-  margin: 20px 0px 20px 8%;
-  font-weight: bold;
-  clear: both;
+
+h4.container-title {
+    margin: 20px 0px 20px 8%;
+    font-weight: bold;
+    clear: both;
 }
-div.events
-{
+
+div.events {
     margin: 0 8%;
 }
-div.regins-container
-{
+
+div.regins-container {
     background: rgba(248, 248, 248, 0.5);
     box-sizing: border-box;
     border: 1px solid #f2c9bb;
     margin: 0 8%;
+}
+
+div.regins-first {
+    font-size: 0;
+    position: relative;
+    box-sizing: border-box;
+    margin: 10px 5px;
+}
+
+a.regin-first {
+    font-size: 14px;
+    color: #333;
+    line-height: 1.8;
+    margin: 3 10px 2px 0;
+    padding: 0 7px;
+    display: inline-block;
+    transition: 0.3s;
+    text-decoration: none;
+    cursor: pointer;
+}
+a.regin-first.active
+{
+    background: #cc0000;
+    color: #fff;
+    &:hover
+    {
+        color:#fff;
+    }
+}
+a.regin-first:hover
+{
+    color:#cc0000;
 }
 </style>
