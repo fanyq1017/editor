@@ -4,8 +4,8 @@
     <h4 class="container-title">信息动态</h4>
     <ul class="article-list">
       <li v-for="article in articles" class="article-info">
-        <span style="display:block; float:left;">{{ article.title }}</span>
-        <span class="date">{{ article.date }}</span>
+        <div class="title">{{ article.title }}</div>
+        <div class="date">{{ article.publishDate }}</div>
       </li>
     </ul>
 
@@ -24,8 +24,8 @@
       <h4 class="container-title">热点信息</h4>
       <ul class="article-list">
         <li v-for="article in articles" class="article-info">
-          <span style="display:block; float:left;">{{ article.title }}</span>
-          <span class="date">{{ article.date }}</span>
+          <span span class="title">{{ article.title }}</span>
+          <span class="date">{{ article.publishDate }}</span>
         </li>
       </ul>
     </div>
@@ -53,20 +53,21 @@
 
 
 <script>
+import {getRequest} from '../../utils/api.js'
 export default {
   name: "ArticleTable",
   data() {
     return {
       articles: 
       [
-        { title: "这是第一篇新闻", uid: "001" ,date:"2022.1.15"},
-        { title: "这是第二篇新闻", uid: "002" ,date:"2022.1.16"},
-        { title: "这是第三篇新闻", uid: "003" ,date:"2022.1.19"},
-        { title: "这是第四篇新闻", uid: "004" ,date:"2022.1.19"},
-        { title: "这是第一篇新闻", uid: "001" ,date:"2022.1.15"},
-        { title: "这是第二篇新闻", uid: "002" ,date:"2022.1.16"},
-        { title: "这是第三篇新闻", uid: "003" ,date:"2022.1.19"},
-        { title: "这是第四篇新闻", uid: "004" ,date:"2022.1.19"},
+        { title: "这是第一篇新闻", id: "001" ,publishDate:"2022.1.15"},
+        { title: "这是第二篇新闻", id: "002" ,publishDate:"2022.1.16"},
+        { title: "这是第三篇新闻", id: "003" ,publishDate:"2022.1.19"},
+        { title: "这是第四篇新闻", id: "004" ,publishDate:"2022.1.19"},
+        { title: "这是第一篇新闻", id: "001" ,publishDate:"2022.1.15"},
+        { title: "这是第二篇新闻", id: "002" ,publishDate:"2022.1.16"},
+        { title: "这是第三篇新闻", id: "003" ,publishDate:"2022.1.19"},
+        { title: "这是第四篇新闻", id: "004" ,publishDate:"2022.1.19"},
       ],
       selIems: [],
       loading: false,
@@ -75,10 +76,16 @@ export default {
       pageSize: 6,
     };
   },
-  mounted: function () {
-    var _this = this;
-    this.loading = true;
-  },
+  mounted() {
+        // console.log('mouted');
+        var _this = this;
+        getRequest("/article/all?state=1&page=1&count=5&type=-1").then(
+            (response) => {
+                 console.log(response.data.data);
+                _this.articles = response.data.data.records;
+            }
+        )
+    },
 };
 </script>
 <style scoped>
@@ -99,6 +106,8 @@ ul.article-list
 li.article-info
 {
   padding:6px;
+  overflow-x: hideen;
+  font-size: small;
 }
 li.article-info:hover
 {
@@ -131,12 +140,18 @@ h4.container-title
   font-weight: bold;
   clear: both;
 }
-span.date
+div.date
 {
-  display: block;
   font-weight: bold;
   opacity: 0.6;
-  float: right;
+  height:100%;
+  box-sizing: border-box;
+}
+div.title
+{
+  height:100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 div.col2
 {

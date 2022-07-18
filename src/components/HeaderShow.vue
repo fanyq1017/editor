@@ -10,7 +10,7 @@
           active-text-color="#f6a598"
       >
         <el-menu-item><img src="../assets/logo.jpg" class="user-img"/></el-menu-item>
-        <el-menu-item ><span style="font-size: 20px">志 愿 者 服 务 系 统</span></el-menu-item>
+        <el-menu-item ><span style="font-size: 20px;font-weight: 500">志 愿 者 服 务 系 统</span></el-menu-item>
       </el-menu>
     </el-col>
     <el-col :span="12">
@@ -30,7 +30,10 @@
         <el-menu-item index="3" @click="ClickMenu('信息动态')"
           >信息动态</el-menu-item
         >
-        <el-menu-item index="4" @click="ClickMenu('编辑测试')"
+        <el-menu-item index="4" @click="ClickMenu('雷锋热线')"
+        >雷锋热线</el-menu-item
+        >
+        <el-menu-item index="5" @click="ClickMenu('编辑测试')"
           >编辑测试</el-menu-item
         >
       </el-menu>
@@ -91,6 +94,12 @@ export default {
             console.log("点击信息动态")
           this.$router.push({
             path: "/message",
+          });
+          break;
+        case "雷锋热线":
+          console.log("点击信息动态")
+          this.$router.push({
+            path: "/wehelp",
           });
           break;
       }
