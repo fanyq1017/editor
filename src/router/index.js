@@ -41,7 +41,7 @@ const routes = [
             {
                 path: '/video',
                 name:'video',
-                component:() => import('../components/video/VideoNavMenu')
+                component:() => import('../components/video/VideoNavMenu.vue')
             }
         ]
     },
