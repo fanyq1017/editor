@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-radio-group 
+    <el-radio-group
       v-model="isCollapse"
       text-color="#FFFFFF"
       style="margin-bottom: 20px;"
@@ -9,7 +9,7 @@
       <el-radio-button :label="false" >展开</el-radio-button>
       <el-radio-button :label="true" >收起</el-radio-button>
     </el-radio-group>
-    <el-menu 
+    <el-menu
       default-active="1"
       class="el-menu-vertical-demo"
       @open="handleOpen"
@@ -45,6 +45,9 @@
       },
       handleClose(key, keyPath) {
         console.log(key, keyPath);
+      },
+      showVideo(){
+
       }
     }
   }

@@ -43,6 +43,11 @@ const routes = [
                 path: '/wehelp',
                 name:'wehelp',
                 component:() => import('../components/leifeng/weHelp')
+            },
+            {
+                path: '/video',
+                name:'video',
+                component:() => import('../components/video/VideoNavMenu')
             }
         ]
     },
