@@ -20,7 +20,12 @@
         props:{
             msg:{
 
-            }
+            },
+            info_state:
+            {
+                active:false,
+                info:{}
+            },
         },
         components: {
           YButton
@@ -30,6 +35,9 @@
           handleClick()
           {
             console.log("handleClick");
+            this.info_state.active = true;
+            this.info_state.info = this.msg;
+            console.log('info_state in child: ' + this.info_state.info.pname + ' ' + this.info_state.active);
           }
         }
     }
@@ -102,6 +110,5 @@
       color: #d0d0d0;
       padding: 10px;
     }
-
   }
 </style>

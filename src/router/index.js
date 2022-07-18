@@ -17,12 +17,6 @@ const routes = [
 
             },
             {
-                path: '/editor',
-                name:'editor',
-                component:() => import('../components/MarkdownEditor')
-
-            },
-            {
                 path: '/message',
                 name:'message',
                 component:() => import('../components/message/MessageShow.vue')

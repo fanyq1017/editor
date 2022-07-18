@@ -32,10 +32,30 @@
                 <div v-loading="loading" element-loading-text="加载中..." style="min-height: 35vw;">
                     <div class="img-item">
                         <div class="goods-box">
-                            <activity-event v-for="event in events" :msg="event"></activity-event>
+                            <activity-event v-for="event in events" :msg="event" :info_state="info_state"></activity-event>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div v-if="this.info_state.active" class="more-info">
+            <div class="more-info-header">
+                <img :src="this.info_state.info.pimage" :alt="this.info_state.info.pname" />
+
+                <div>
+                    <div class="exit" @click="closeMoreInfo">X</div>
+                    <h5 style="margin-bottom:8px;font-weight: bold;">{{this.info_state.info.pname}}</h5>
+                    <div class="info-detail">活动地点：{{this.info_state.info.plocation}}</div>
+                    <div class="info-detail">活动开始时间：{{this.info_state.info.pprojectstart}}</div>
+                    <div class="info-detail">活动结束时间：{{this.info_state.info.pprojectend}}</div>
+                    <div class="info-detail">联系电话：{{this.info_state.info.ptelephone}}</div>
+                    
+                </div>
+            </div>
+            <div class="more-info-body">
+                <h5 style="font-weight: bold; margin-bottom: 20px;">活动介绍</h5>
+                <div class="info-detail">{{this.info_state.info.pinfo}}</div>
             </div>
         </div>
     </div>
@@ -57,6 +77,11 @@ var cur_third_dom;
 export default {
     data() {
         return {
+            info_state:
+            {
+                active:false,
+                info:{}
+            },
             selectedRegions: [],
             opitions: regionData,
             second_opitions: [],
@@ -118,6 +143,7 @@ export default {
     },
     methods: {
         handleTopClick(regin) {
+            console.log('info_state in parent: ' + this.info_state.info.pname + ' ' + this.info_state.active);
             console.log('id of clicked:' + regin.value + ' id of cur: ' + cur_dom.id);
 
             // 重置选中地区
@@ -137,7 +163,7 @@ export default {
 
                 document.getElementById('regins-third').style.display = 'none';
                 if (regin.children.length > 1) {
-                    console.log(typeof document.getElementById('regins-second'));
+                    // console.log(typeof document.getElementById('regins-second'));
                     document.getElementById('regins-second').style.display = 'block';
                 }
                 else {
@@ -146,11 +172,11 @@ export default {
 
                 var length = this.second_opitions.length;
                 for (var i = 0; i < length; i++) {
-                    console.log('second_opitions poping...' + this.second_opitions.length);
+                    // console.log('second_opitions poping...' + this.second_opitions.length);
                     this.second_opitions.pop();
                 }
                 for (var i = 0; i < regin.children.length; i++) {
-                    console.log('second_opitions pushing...' + this.second_opitions.length);
+                    // console.log('second_opitions pushing...' + this.second_opitions.length);
                     this.second_opitions.push(regin.children[i]);
                 }
             }
@@ -173,7 +199,7 @@ export default {
                 this.selectedRegions.push(regin.value);
 
                 if (regin.children.length > 1) {
-                    console.log(typeof document.getElementById('regins-third'));
+                    // console.log(typeof document.getElementById('regins-third'));
                     document.getElementById('regins-third').style.display = 'block';
                 }
                 else {
@@ -182,11 +208,11 @@ export default {
 
                 var length = this.third_opitions.length;
                 for (var i = 0; i < length; i++) {
-                    console.log('third_opitions poping...' + this.third_opitions.length);
+                    // console.log('third_opitions poping...' + this.third_opitions.length);
                     this.third_opitions.pop();
                 }
                 for (var i = 0; i < regin.children.length; i++) {
-                    console.log('third_opitions pushing...' + this.third_opitions.length);
+                    // console.log('third_opitions pushing...' + this.third_opitions.length);
                     this.third_opitions.push(regin.children[i]);
                 }
             }
@@ -216,8 +242,12 @@ export default {
                 (response) => {
                     // console.log(response.data.data);
                     _this.events = response.data.data.records;
-                    console.log(response.data.data.records);
+                    // console.log(response.data.data.records);
                 })
+        },
+        closeMoreInfo()
+        {
+            this.info_state.active = false;
         }
     }
 }
@@ -361,6 +391,82 @@ a.regin-third.active {
 
     &:hover {
         color: #fff;
+    }
+}
+
+div.more-info
+{
+    position:fixed;
+    box-sizing: border-box;
+    display: block;
+    width: 60%;
+    height: 70%;
+    top: 15%;
+    left: 20%;
+
+    border:1px solid rgba(255, 51, 0, 0.521);
+    box-shadow: 2px 2px 20px 1px #999;
+
+    background-color: rgba(255,255,255,0.7);
+    backdrop-filter: blur(6px);
+}
+div.more-info-header
+{
+    position:static;
+    box-sizing: border-box;
+    display: block;
+    height:40%;
+
+    &>img
+    {
+        box-sizing: border-box;
+        height:100%;
+        width: 35%;
+        padding: 20px;
+        float:left;
+    }
+    &>div
+    {
+        display: block;
+        box-sizing: border-box;
+        height: 100%;
+        width: 65%;
+        padding: 20px;
+        float:left;
+        overflow: hidden;
+    }
+}
+div.info-detail
+    {
+        padding: 4px 0px;
+        font-size: 14px;
+    }
+div.more-info-body
+{
+    position:static;
+    box-sizing: border-box;
+    display: block;
+    height:60%;
+    padding: 10px 30px;
+
+}
+.exit
+{
+    color:rgb(255, 51, 0);
+    position: absolute; 
+    width:30px; 
+    height:30px;
+    right:0; 
+    top:0; 
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    margin:10px;
+    border:3px solid rgba(255, 51, 0, 0.521);
+    &:hover
+    {
+        background-color: rgba(255, 51, 0, 0.521);
+        cursor:pointer;
     }
 }
 </style>
