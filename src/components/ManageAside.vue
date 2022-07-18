@@ -22,26 +22,14 @@
           >发布资讯</el-menu-item
         >
       </el-submenu>
-      <el-submenu index="志愿活动管理">
-        <template slot="title">
-          <i class="el-icon-location"></i>
-          <span>志愿活动管理</span>
-        </template>
-        <el-menu-item index="活动列表" @click="ClickMenu('活动列表')"
-          >活动列表</el-menu-item
-        >
-        <el-menu-item index="发布活动" @click="ClickMenu('发布活动')"
-          >发布活动</el-menu-item
-        >
-      </el-submenu>
 
-      <el-menu-item index="2">
+      <el-menu-item index="志愿活动管理" @click="ClickMenu('志愿活动管理')">
         <i class="el-icon-menu"></i>
-        <span slot="title">导航二</span>
+        <span slot="title">志愿活动管理</span>
       </el-menu-item>
-      <el-menu-item index="3" disabled>
-        <i class="el-icon-document"></i>
-        <span slot="title">导航三</span>
+      <el-menu-item index="用户管理" @click="ClickMenu('用户管理')">
+        <i class="el-icon-menu"></i>
+        <span slot="title">用户管理</span>
       </el-menu-item>
       <el-menu-item index="4">
         <i class="el-icon-setting"></i>
@@ -77,6 +65,13 @@ export default {
 
         case "发布活动":
           this.$router.push({ path: "/manage/postactivity" });
+          break;
+
+        case "用户管理":
+          this.$router.push({ path: "/manage/manageuser" });
+          break;
+        case "志愿活动管理":
+          this.$router.push({ path: "/manage/manageactivity" });
           break;
       }
     },

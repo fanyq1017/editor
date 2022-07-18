@@ -38,12 +38,29 @@
 <script>
 import { mavonEditor } from "mavon-editor";
 import { postRequest } from "../../utils/api";
+import  {getRequest} from "../../utils/api"
 import { uploadFileRequest } from "../../utils/api";
 import axios from "axios";
 import "mavon-editor/dist/css/index.css";
 export default {
   name: "MarkdownEditor",
   components: { mavonEditor },
+  mounted() {
+    var id = this.$route.query.id
+    var _this = this
+    if(id != null && id != '' && id != undefined){
+
+      getRequest("/article/query?id=" + id).then(
+        (response) => {
+          if(response.data.state == 200){
+            _this.article = response.data.data
+            _this.mdContent = response.data.data.mdContent
+        }}
+      )
+
+    }
+  },
+
   data() {
     return {
       options: [

@@ -97,7 +97,7 @@ export default {
         account: [{ required: true, message: "请输入用户名", trigger: "blur" }],
         checkPass: [{ required: true, message: "请输入密码", trigger: "blur" }],
         checkPhone: [
-          { required: true, message: "请输入密码", trigger: "blur" },
+          { required: true, message: "请输入电话号码", trigger: "blur" },
         ],
       },
       checked: true,
@@ -120,9 +120,24 @@ export default {
     submitClick: function () {
       var _this = this;
 
+
       postRequest('/login', {username : this.loginForm.username , password : this.loginForm.password}).then(
         (response) => {
-          console.log(response.data.state + " " + response.data.data)
+          if(response.data.state == 200){
+            let user = {uId:'',username:'', type:''}
+            user.uId =response.data.data.uId
+            console.log('登录成功')
+            user.username = response.data.data.username
+            user.type = response.data.data.type
+            _this.$store.commit('setUser', user)
+            _this.$router.push({path: '/manage'})
+ 
+
+            
+
+          }
+          console.log("123")
+          console.log(response.data.data)
         },
         (error) => {
           console.log(error)
@@ -145,7 +160,7 @@ export default {
 
       postRequest('/register', data).then(
         (response) => {
-          console.log(response);
+          console.log(response.data.data);
         },
         (error) => {
           console.log(error);
