@@ -10,7 +10,7 @@
       <el-radio-button :label="true" >收起</el-radio-button>
     </el-radio-group>
     <el-menu 
-      default-active="1"
+      default-active="0"
       class="el-menu-vertical-demo"
       @open="handleOpen"
       @close="handleClose"
@@ -18,14 +18,13 @@
       active-text-color="#FF7356"
       background-color="#FFFFFF"
       >
-      <el-submenu index="1">
+      <el-submenu index="0">
         <template slot="title">
           <i class="el-icon-location"></i>
           <span slot="title">视频列表</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="1-1">视频1</el-menu-item>
-          <el-menu-item index="1-2">视频2</el-menu-item>
+          <el-menu-item :index="i" v-for="(p,i) in videos" :key="i">视频{{i+1}}</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
     </el-menu>
@@ -36,7 +35,10 @@
   export default {
     data() {
       return {
-        isCollapse: false
+        isCollapse: false,//是否水平折叠
+        videos:[
+          {},{},{},{},{},{},{},{}
+        ]
       };
     },
     methods: {
@@ -55,6 +57,7 @@
     width: 200px;
     min-height: 400px;
   }
+  /*按钮字体悬浮颜色*/
   .el-radio-group .el-radio-button .el-radio-button__inner:hover{
     color:black;
   }

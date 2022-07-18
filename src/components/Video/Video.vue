@@ -3,8 +3,6 @@
     class="video-js vjs-big-play-centered" 
     id="vid1"
     >
-        <!-- 视频资源，修改这个即可 -->
-        <source :src="url">
     </video>
 </template>
 
@@ -15,17 +13,34 @@ import 'video.js/dist/video-js.min.css'
 export default {
   name:'Video',
   mounted(){
+    let i = 0;
     let player = videojs('vid1',{
         controls: true,//显示播放栏
         autoplay: true,//自动播放
         preload:'auto',//预加载
         width:750,//宽度
         playbackRates:[0.5,1,1.25,1.5,2],//速率
+        sources:[{
+            src:this.videos[i].url,
+            type:'video/mp4'
+        }]
+    })
+    let vm = this;
+    player.on('ended',function(){
+        i++;
+        if(i >= vm.videos.length) i = 0;
+        this.src({type:'video/mp4',src:vm.videos[i].url});
+        console.log(i);
+        this.play();
     })
   },
   data(){
     return{
-        url:require("../../assets/oobe-intro.mp4")
+        videos:[
+            {url:require("../../assets/oobe-intro.mp4")},
+            {url:require("../../assets/trailer.mp4")},
+            {url:require("../../assets/oobe-intro.mp4")},
+        ]
     }
   },
 }
