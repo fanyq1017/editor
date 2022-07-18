@@ -5,20 +5,23 @@
         <div class="regins-container">
             <!-- <reginSelector></reginSelector> -->
             <div class="regins-first">
-                <a class="regin-first" href="javascript:void(0)" v-for="regin in opitions" :id="regin.value" @click="handleTopClick(regin)">
-                    {{regin.label}}
+                <a class="regin-first" href="javascript:void(0)" v-for="regin in opitions" :id="regin.value"
+                    @click="handleTopClick(regin)">
+                    {{ regin.label }}
                 </a>
             </div>
             <div class="regins-second" id="regins-second">
                 <h6 style="margin-left:8px; font-weight: bold;">市</h6>
-                <a class="regin-second" href="javascript:void(0)" v-for="regin in second_opitions" :id="regin.value" @click="handleSecondClick(regin)">
-                    {{regin.label}}
+                <a class="regin-second" href="javascript:void(0)" v-for="regin in second_opitions" :id="regin.value"
+                    @click="handleSecondClick(regin)">
+                    {{ regin.label }}
                 </a>
             </div>
             <div class="regins-third" id="regins-third">
                 <h6 style="margin-left:8px; font-weight: bold;">区县</h6>
-                <a class="regin-third" href="javascript:void(0)" v-for="regin in third_opitions" :id="regin.value" @click="handleThirdClick(regin)">
-                    {{regin.label}}
+                <a class="regin-third" href="javascript:void(0)" v-for="regin in third_opitions" :id="regin.value"
+                    @click="handleThirdClick(regin)">
+                    {{ regin.label }}
                 </a>
             </div>
         </div>
@@ -54,26 +57,26 @@ var cur_third_dom;
 export default {
     data() {
         return {
-            selectedRegions:[],
-            opitions:regionData,
-            second_opitions:[],
-            third_opitions:[],
+            selectedRegions: [],
+            opitions: regionData,
+            second_opitions: [],
+            third_opitions: [],
             events: [
                 {
-                    activityImg: 'https://chinavolunteer.mca.gov.cn/NVSI/LEAP/site/static/img/10.f055224.png',
-                    title: '甲活动',
+                    pimage: 'https://chinavolunteer.mca.gov.cn/NVSI/LEAP/site/static/img/10.f055224.png',
+                    pname: '甲活动',
                 },
                 {
-                    activityImg: 'https://chinavolunteer.mca.gov.cn/NVSI/LEAP/site/static/img/43.c238c5c.png',
-                    title: '乙活动',
+                    pimage: 'https://chinavolunteer.mca.gov.cn/NVSI/LEAP/site/static/img/43.c238c5c.png',
+                    pname: '乙活动',
                 },
                 {
-                    activityImg: 'https://chinavolunteer.mca.gov.cn/NVSI/LEAP/site/static/img/65.18ae6ca.png',
-                    title: '丙活动',
+                    pimage: 'https://chinavolunteer.mca.gov.cn/NVSI/LEAP/site/static/img/65.18ae6ca.png',
+                    pname: '丙活动',
                 },
                 {
-                    activityImg: 'https://chinavolunteer.mca.gov.cn/NVSI/LEAP/site/static/img/50.0c3f918.png',
-                    title: '丁活动',
+                    pimage: 'https://chinavolunteer.mca.gov.cn/NVSI/LEAP/site/static/img/50.0c3f918.png',
+                    pname: '丁活动',
                 }
             ]
         }
@@ -85,14 +88,14 @@ export default {
     mounted() {
         // console.log('mouted');
         var _this = this;
-        getRequest("/article/all?state=1&page=1&count=20&type=-1").then(
+        getRequest("/project/query?provinceRegionCode=110000&cityRegionCode=110100&districtRegionCode=110101&page=1&count=10").then(
             (response) => {
                 // console.log(response.data.data);
                 _this.events = response.data.data.records;
             }
         );
         // console.log('init' + Array.isArray(this.selectedRegions));
-        
+
         // 初始化选中区域
         {
             cur_dom = document.getElementById(110000);
@@ -114,8 +117,7 @@ export default {
 
     },
     methods: {
-        handleTopClick(regin)
-        {
+        handleTopClick(regin) {
             console.log('id of clicked:' + regin.value + ' id of cur: ' + cur_dom.id);
 
             // 重置选中地区
@@ -125,41 +127,35 @@ export default {
                 cur_third_dom.className = 'regin-third'; //清除当前选中三级地区
                 // console.log(this.selectedRegions.length);
                 var length = this.selectedRegions.length;
-                for(var i = 0; i < length; i++)
-                {
+                for (var i = 0; i < length; i++) {
                     this.selectedRegions.pop();
                 }
-                
+
                 cur_dom = document.getElementById(regin.value);
                 cur_dom.className = 'regin-first active';
                 this.selectedRegions.push(regin.value);
 
                 document.getElementById('regins-third').style.display = 'none';
-                if(regin.children.length > 1)
-                {
+                if (regin.children.length > 1) {
                     console.log(typeof document.getElementById('regins-second'));
                     document.getElementById('regins-second').style.display = 'block';
                 }
-                else
-                {
+                else {
                     document.getElementById('regins-second').style.display = 'none';
                 }
 
                 var length = this.second_opitions.length;
-                for(var i = 0; i < length; i++)
-                {
+                for (var i = 0; i < length; i++) {
                     console.log('second_opitions poping...' + this.second_opitions.length);
                     this.second_opitions.pop();
                 }
-                for(var i = 0; i < regin.children.length; i++)
-                {
+                for (var i = 0; i < regin.children.length; i++) {
                     console.log('second_opitions pushing...' + this.second_opitions.length);
                     this.second_opitions.push(regin.children[i]);
                 }
             }
         },
-        handleSecondClick(regin)
-        {
+        handleSecondClick(regin) {
             console.log('id of clicked_second:' + regin.value + ' id of cur_second: ' + cur_second_dom.id);
 
             // 重置选中地区
@@ -168,55 +164,60 @@ export default {
                 cur_third_dom.className = 'regin-third'; //清除当前选中三级地区
                 // console.log(this.selectedRegions.length);
                 var length = this.selectedRegions.length;
-                for(var i = 1; i < length; i++)
-                {
+                for (var i = 1; i < length; i++) {
                     this.selectedRegions.pop();
                 }
-                
+
                 cur_second_dom = document.getElementById(regin.value);
                 cur_second_dom.className = 'regin-second active';
                 this.selectedRegions.push(regin.value);
 
-                if(regin.children.length > 1)
-                {
+                if (regin.children.length > 1) {
                     console.log(typeof document.getElementById('regins-third'));
                     document.getElementById('regins-third').style.display = 'block';
                 }
-                else
-                {
+                else {
                     document.getElementById('regins-third').style.display = 'none';
                 }
 
                 var length = this.third_opitions.length;
-                for(var i = 0; i < length; i++)
-                {
+                for (var i = 0; i < length; i++) {
                     console.log('third_opitions poping...' + this.third_opitions.length);
                     this.third_opitions.pop();
                 }
-                for(var i = 0; i < regin.children.length; i++)
-                {
+                for (var i = 0; i < regin.children.length; i++) {
                     console.log('third_opitions pushing...' + this.third_opitions.length);
                     this.third_opitions.push(regin.children[i]);
                 }
             }
         },
-        handleThirdClick(regin)
-        {
+        handleThirdClick(regin) {
             console.log('id of clicked_third:' + regin.value + ' id of cur_third: ' + cur_third_dom.id);
 
             {
                 cur_third_dom.className = 'regin-third'; //清除当前选中二级地区
                 // console.log(this.selectedRegions.length);
                 var length = this.selectedRegions.length;
-                for(var i = 2; i < length; i++)
-                {
+                for (var i = 2; i < length; i++) {
                     this.selectedRegions.pop();
                 }
-                
+
                 cur_third_dom = document.getElementById(regin.value);
                 cur_third_dom.className = 'regin-third active';
                 this.selectedRegions.push(regin.value);
             }
+
+            this.loadNewEvents(selectedRegions[0], selectedRegions[1], selectedRegions[2], 5, 1);
+        },
+        loadNewEvents(regin0, regin1, regin2, count, page) {
+            var url = '/project/query?provinceRegionCode='+ regin0 +'&cityRegionCode='+ regin1 +'&districtRegionCode='+ regin2 +'&page='+ page +'&count=' + count;
+            var _this = this;
+            getRequest(url).then(
+                (response) => {
+                    // console.log(response.data.data);
+                    _this.events = response.data.data.records;
+                    console.log(response.data.data.records);
+                })
         }
     }
 }
@@ -282,85 +283,84 @@ a.regin-first {
     transition: 0.3s;
     text-decoration: none;
     cursor: pointer;
-    &:hover
-    {
-        color:#cc0000;
-    }
-}
-a.regin-first.active
-{
-    background: #cc0000;
-    color: #fff;
-    &:hover
-    {
-        color:#fff;
-    }
-}
-div.regins-second
-{
-    font-size: 0;
-    position: relative;
-    box-sizing: border-box;
-    margin: 10px 5px;
-    display: none;
-}
-a.regin-second 
-{
-    font-size: 14px;
-    color: #333;
-    line-height: 1.8;
-    margin: 3 10px 2px 0;
-    padding: 0 7px;
-    display: inline-block;
-    transition: 0.3s;
-    text-decoration: none;
-    cursor: pointer;
-    &:hover
-    {
-        color:#cc0000;
-    }
-}
-a.regin-second.active
-{
-    background: #cc0000;
-    color: #fff;
-    &:hover
-    {
-        color:#fff;
-    }
-}
-div.regins-third
-{
-    font-size: 0;
-    position: relative;
-    box-sizing: border-box;
-    margin: 10px 5px;
-    display: none;
-}
-a.regin-third
-{
-    font-size: 14px;
-    color: #333;
-    line-height: 1.8;
-    margin: 3 10px 2px 0;
-    padding: 0 7px;
-    display: inline-block;
-    transition: 0.3s;
-    text-decoration: none;
-    cursor: pointer;
-    &:hover
-    {
-        color:#cc0000;
-    }
-}
-a.regin-third.active
-{
-    background: #cc0000;
-    color: #fff;
-    &:hover
-    {
-        color:#fff;
+
+    &:hover {
+        color: #cc0000;
     }
 }
 
+a.regin-first.active {
+    background: #cc0000;
+    color: #fff;
+
+    &:hover {
+        color: #fff;
+    }
+}
+
+div.regins-second {
+    font-size: 0;
+    position: relative;
+    box-sizing: border-box;
+    margin: 10px 5px;
+    display: none;
+}
+
+a.regin-second {
+    font-size: 14px;
+    color: #333;
+    line-height: 1.8;
+    margin: 3 10px 2px 0;
+    padding: 0 7px;
+    display: inline-block;
+    transition: 0.3s;
+    text-decoration: none;
+    cursor: pointer;
+
+    &:hover {
+        color: #cc0000;
+    }
+}
+
+a.regin-second.active {
+    background: #cc0000;
+    color: #fff;
+
+    &:hover {
+        color: #fff;
+    }
+}
+
+div.regins-third {
+    font-size: 0;
+    position: relative;
+    box-sizing: border-box;
+    margin: 10px 5px;
+    display: none;
+}
+
+a.regin-third {
+    font-size: 14px;
+    color: #333;
+    line-height: 1.8;
+    margin: 3 10px 2px 0;
+    padding: 0 7px;
+    display: inline-block;
+    transition: 0.3s;
+    text-decoration: none;
+    cursor: pointer;
+
+    &:hover {
+        color: #cc0000;
+    }
+}
+
+a.regin-third.active {
+    background: #cc0000;
+    color: #fff;
+
+    &:hover {
+        color: #fff;
+    }
+}
 </style>

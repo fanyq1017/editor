@@ -3,12 +3,12 @@
         <div style="width: 100%; height: 50%; border:none;">
             <a class="good-img">
                 <!-- <img v-lazy="msg.activityImg" :alt="msg.activityName" :key="msg.activityImg" /> -->
-                <img :src="msg.activityImg" />
+                <img :src="msg.pimage" />
             </a>
         </div>
-        <h6 class="good-title" v-html="msg.title"></h6>
+        <h4 class="good-title" v-html="msg.pname"></h4>
         <div class="ds pa">
-            <y-button text="查看详情" style="margin: 0 5px; margin-top: 10%;"></y-button>
+            <y-button @btnClick="handleClick" text="查看详情" style="margin: 0 5px; margin-top: 20%;"></y-button>
         </div>
     </div>
 </template>
@@ -24,6 +24,13 @@
         },
         components: {
           YButton
+        },
+        methods:
+        {
+          handleClick()
+          {
+            console.log("handleClick");
+          }
         }
     }
 </script>

@@ -8,14 +8,20 @@
         <div class="date">{{ article.publishDate }}</div>
       </li>
     </ul>
-
-    <div class="pages">
-      <a>1</a>
-      <a>2</a>
-      <a>3</a>
-      <a>上一页</a>
-      <a>下一页</a>
-    </div>
+    <h4 class="container-title">专题活动</h4>
+    <ul class="article-list">
+      <li v-for="article in articles" class="article-info">
+        <div class="title">{{ article.title }}</div>
+        <div class="date">{{ article.publishDate }}</div>
+      </li>
+    </ul>
+    <h4 class="container-title">公益广告</h4>
+    <ul class="article-list">
+      <li v-for="article in articles" class="article-info">
+        <div class="title">{{ article.title }}</div>
+        <div class="date">{{ article.publishDate }}</div>
+      </li>
+    </ul>
 
   </div>
 
@@ -23,9 +29,9 @@
     <div class="hotpoint-container">
       <h4 class="container-title">热点信息</h4>
       <ul class="article-list">
-        <li v-for="article in articles" class="article-info">
-          <span span class="title">{{ article.title }}</span>
-          <span class="date">{{ article.publishDate }}</span>
+        <li v-for="article in articles.slice(0, 3)" class="article-info">
+          <div class="title">{{ article.title }}</div>
+          <div class="date">{{ article.publishDate }}</div>
         </li>
       </ul>
     </div>
@@ -73,7 +79,7 @@ export default {
       loading: false,
       currentPage: 1,
       totalCount: 20,
-      pageSize: 6,
+      pageSize: 5,
     };
   },
   mounted() {
@@ -94,7 +100,7 @@ div.article-container
   box-sizing: border-box;
   width:50%;
   height:1000px;
-  padding:10px 30px 20px 0px;
+  padding:20px 10px;
   margin:4% 1% 3% 9%;
   background-color: rgba(245, 245, 245, 0.6);
   border: 1px solid #f2c9bb;
@@ -145,8 +151,9 @@ div.date
 {
   font-weight: bold;
   opacity: 0.6;
-  height:100%;
-  box-sizing: border-box;
+  overflow: hidden;
+  text-align: right;
+  height: 20px;
 }
 div.title
 {
@@ -184,30 +191,6 @@ div.hot-img>img
   height: 100%;
   padding: 0px;
   margin-bottom: 2%;
-}
-div.pages
-{
-  width:100%;
-  text-align: center;
-  margin-bottom: 40px;
-  position: absolute;
-  top:1070px;
-  left:-230px;
-}
-div.pages a
-{
-  border:1px solid #cfcfcf;
-  padding: 1px 5px;
-  margin-right:5px;
-  border-radius: 5px;
-}
-div.pages a:hover
-{
-  border:2px solid #cfcfcf;
-  background-color: #cfcfcf;
-  padding: 1px 5px;
-  margin-right:5px;
-  border-radius: 5px;
 }
 
 </style>
