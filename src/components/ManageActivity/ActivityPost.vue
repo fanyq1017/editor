@@ -36,6 +36,9 @@
             <regin-selector @changeregin="changeregin($event)">
             </regin-selector>
           </el-form-item>
+          <el-form-item label="详细地址">
+            <el-input v-model="activity.pLocation"></el-input>
+          </el-form-item>
 
           <el-form-item label="活动时间">
             <el-col :span="24">

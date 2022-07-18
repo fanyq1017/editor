@@ -42,7 +42,7 @@
           <el-table-column
               prop="publishDate"
               width="180">
-            <template slot-scope="scope"><span style="cursor:pointer" @click="itemClick(scope.row)">{{scope.row.publishDate | formatDate}}}</span></template>
+            <template slot-scope="scope"><span style="cursor:pointer" @click="itemClick(scope.row)">{{scope.row.publishDate | formatDate}}</span></template>
           </el-table-column>
         </el-table>
       </el-col>
@@ -51,6 +51,10 @@
       <el-divider></el-divider>
       <EchartsMap/>
     </el-col>
+    <el-col>
+      <el-divider></el-divider>
+      <VideoContent/>
+    </el-col>
   </el-row>
 </template>
 
@@ -58,7 +62,8 @@
 
 <script>
 import EchartsMap from "@/components/home/echartMap";
-import {getRequest} from "../../utils/api"
+import {getRequest} from "@/utils/api"
+import VideoContent from "@/components/video/VideoContent";
 export default {
   methods: {
     itemClick(row) {
@@ -75,7 +80,7 @@ export default {
   },
 
 
-  components: {EchartsMap},
+  components: {VideoContent, EchartsMap},
     name: "HomeShow",
     mounted() {
       console.log('mouted')

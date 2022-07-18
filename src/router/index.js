@@ -4,28 +4,28 @@ Vue.use(VueRouter)
 
 const routes = [
     {
-        path:'/',
+        path: '/',
         name: 'MainShow',
         component: () => import('../components/MainShow.vue'),
-        redirect:'/home',
-        children:[
+        redirect: '/home',
+        children: [
             {
                 path: '/home',
-                name:'home',
+                name: 'home',
 
-                component:() => import('../components/home/HomeShow.vue')
+                component: () => import('../components/home/HomeShow.vue')
 
             },
             {
                 path: '/message',
-                name:'message',
-                component:() => import('../components/message/MessageShow.vue')
+                name: 'message',
+                component: () => import('../components/message/MessageShow.vue')
 
             },
             {
                 path: '/activity',
-                name:'activity',
-                component:() => import('../components/activity/ActivityShow.vue')
+                name: 'activity',
+                component: () => import('../components/activity/ActivityShow.vue')
 
             },
             {
@@ -37,40 +37,59 @@ const routes = [
                 path: '/wehelp',
                 name:'wehelp',
                 component:() => import('../components/leifeng/weHelp')
+            },
+            {
+                path: '/video',
+                name:'video',
+                component:() => import('../components/video/VideoNavMenu')
             }
         ]
     },
     {
-        path:'/manage',
-        name:'manage',
+        path: '/manage',
+        name: 'manage',
         component: () => import('../components/ManageMain'),
-        children:[
+        children: [
             {
                 path: '/manage/postarticle',
-                name:' postarticle',
+                name: ' postarticle',
 
-                component:() => import('../components/PostArticle/PostArticle.vue')
+                component: () => import('../components/PostArticle/PostArticle.vue')
             },
             {
                 path: '/manage/articletable',
-                name:'articletable',
+                name: 'articletable',
 
-                component:() => import('../components/PostArticle/ArticleTable')
+                component: () => import('../components/PostArticle/ArticleTable')
             },
 
             {
                 path: '/manage/postactivity',
-                name:' postarticle',
+                name: ' postarticle',
 
-                component:() => import('../components/ManageActivity/ActivityPost.vue')
+                component: () => import('../components/ManageActivity/ActivityPost.vue')
             },
+            {
+                path: '/manage/manageuser',
+                name: 'manageuser',
+
+                component: () => import('../components/ManageUser/ManageUser.vue')
+            },
+
+            {
+                path: '/manage/manageactivity',
+                name: 'manageactivity',
+
+                component: () => import('../components/ManageActivity/ManageActivity.vue')
+            },
+
         ]
     },
 
     {
-        path:'/login',
-        name:'login',
-        component:() =>import('../components/LoginShow.vue')
+        path: '/login',
+        name: 'login',
+        component: () => import('../components/LoginShow.vue')
     }
 ]
 export default new VueRouter({
