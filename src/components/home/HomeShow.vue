@@ -1,5 +1,5 @@
 <template>
-  <el-row gutter="30" class="home-range">
+  <el-row gutter="30">
     <el-row>
       <el-col style="text-align: center;height: 70px;padding-top: 10px">
         <span  class="leadnews" style="color: #f6a598">头条 : </span>
@@ -141,12 +141,5 @@ export default {
 }
 .brief{
   font-size: small;
-}
-.home-range
-{
-    background-image: url(../../assets/bk.webp);
-    background-repeat: no-repeat;
-    background-size: 100%;
-    background-attachment: fixed;
 }
 </style>
