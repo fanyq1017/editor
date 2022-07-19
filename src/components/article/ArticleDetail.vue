@@ -6,7 +6,7 @@
           type="text"
           icon="el-icon-back"
           @click="goBack"
-          style="padding-bottom: 0px"
+          style="padding: 8px;color:black; background-color: rgba(255, 255, 255, 0.8); position:fixed;border:1px solid #f2c9bb;"
           >返回</el-button
         >
       </div>
@@ -16,24 +16,9 @@
         <div>
           <h2 style="text-align: center">{{ article.title }}</h2>
         </div>
-        <div
-          style="
-            width: 100%;
-            margin-top: 5px;
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-          "
-        >
-          <span style="color: #20a0ff; margin-right: 20px; font-size: 12px"
-            >浏览 {{ article.pageView == null ? 0 : article.pageView }}</span
+          <div style="color: black; font-size: 12px; text-align: center;margin-bottom: 20px;">
+            {{ article.editTime | formatDateTime }}</div
           >
-          <span style="color: #20a0ff; margin-right: 20px; font-size: 12px">
-            {{ article.editTime | formatDateTime }}</span
-          >
-
-          <span style="margin: 0px 50px 0px 0px"></span>
-        </div>
         <div style="text-align: center" v-html="article.htmlContent"></div>
       </div>
     </el-col>
