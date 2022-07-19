@@ -25,17 +25,18 @@ Vue.use(VueLazyload, {
   // attempt: 1
 })
 
-// router.beforeEach((to, from, next) =>{
-//   const username = store.state.user.username
-//   console.log('用户名:'+ username)
-//   console.log(to.name)
-//   if( username== '' && to.name == "manage"){
-//     console.log('用户名空')
-//     return next({name:'login'})
+router.beforeEach((to, from, next) =>{
+  const username = store.state.user.username
+  const type = store.state.user.type
+  console.log('用户名:'+ username)
+  console.log(to.name)
+  if(  type != '1'&& type != '2' && to.name == "manage"){
+    console.log('用户名空')
+    return next({name:'login'})
 
-//   }
-//   return next()
-// })
+  }
+  return next()
+})
 
 new Vue({
   render: h => h(App),

@@ -277,11 +277,13 @@ export default {
     handleDelete(index, row) {
       console.log(index);
       console.log(row);
-      this.dustbinData.push(row.uid);
-      console.log(this.dustbinData);
+
+      var tdustbin = []
+      tdustbin.push(row.uid);
+      console.log(tdustbin);
       var _this = this;
       postRequest("/deleteUser", {
-        uIds: _this.dustbinData,
+        uIds: tdustbin,
       }).then(
         (response) => {
           console.log(response.data.data);
