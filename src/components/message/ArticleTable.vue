@@ -3,21 +3,21 @@
   <div class="article-container">
     <h4 class="container-title">信息动态</h4>
     <ul class="article-list">
-      <li v-for="article in articles" class="article-info">
-        <div class="title">{{ article.title }}</div>
+      <li v-for="article in articles.slice(0, 6)" class="article-info">
+        <div class="title" @click="handleClick(article.id)">{{ article.title }}</div>
         <div class="date">{{ article.publishDate }}</div>
       </li>
     </ul>
     <h4 class="container-title">专题活动</h4>
     <ul class="article-list">
-      <li v-for="article in articles" class="article-info">
+      <li v-for="article in articles.slice(6, 11)" class="article-info">
         <div class="title">{{ article.title }}</div>
         <div class="date">{{ article.publishDate }}</div>
       </li>
     </ul>
     <h4 class="container-title">公益广告</h4>
     <ul class="article-list">
-      <li v-for="article in articles" class="article-info">
+      <li v-for="article in articles.slice(11, 16)" class="article-info">
         <div class="title">{{ article.title }}</div>
         <div class="date">{{ article.publishDate }}</div>
       </li>
@@ -79,19 +79,29 @@ export default {
       loading: false,
       currentPage: 1,
       totalCount: 20,
-      pageSize: 5,
+      pageSize: 15,
     };
   },
   mounted() {
         // console.log('mouted');
         var _this = this;
-        getRequest("/article/all?state=1&page=1&count=5&type=-1").then(
+        getRequest("/article/all?state=1&page=1&count=15&type=-1").then(
             (response) => {
                  console.log(response.data.data);
                 _this.articles = response.data.data.records;
             }
         )
     },
+  methods:
+  {
+    handleClick(id)
+    {
+      this.$router.push({
+        path: "/articledetail",
+        query: {id: id}
+      })
+    }
+  }
 };
 </script>
 <style scoped>
@@ -99,7 +109,7 @@ div.article-container
 {
   box-sizing: border-box;
   width:50%;
-  height:1000px;
+  height:auto;
   padding:20px 10px;
   margin:4% 1% 3% 9%;
   background-color: rgba(245, 245, 245, 0.6);
