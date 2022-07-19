@@ -198,5 +198,4 @@ div.hot-img>img
   padding: 0px;
   margin-bottom: 2%;
 }
-
 </style>

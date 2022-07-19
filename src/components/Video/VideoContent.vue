@@ -1,10 +1,10 @@
 <template>
   <div id="VideoContent">
-    <div class="VMenuWarp item" style="padding-left: 10px">
-      <VideoNavMenu class="VMenu"></VideoNavMenu>
+    <div class="VMenuWarp item">
+      <VideoNavMenu class="VMenu" :Index="NavIndex" @func="changeVideo"></VideoNavMenu>
     </div>
     <div class="VideoWarp item">
-      <Video class="Video"></Video>
+      <Video class="Video" :Index="VideoIndex" @func="changeNav"></Video>
     </div>
   </div>
 </template>
@@ -14,10 +14,24 @@ import VideoNavMenu from "./VideoNavMenu.vue";
 import Video from "./Video.vue";
 
 export default {
-    components: {
-      VideoNavMenu,
-      Video
+  data(){
+    return{
+      VideoIndex:0,//当前播放的是第几个视频(0起步)
+      NavIndex:0//当前在第几个导航栏
     }
+  },
+  components: {
+    VideoNavMenu,
+    Video
+  },
+  methods:{
+    changeVideo(data){//改变视频链接
+      this.VideoIndex = data;
+    },
+    changeNav(data){//改变导航栏
+      this.NavIndex = data;
+    }
+  }
 }
 </script>
 

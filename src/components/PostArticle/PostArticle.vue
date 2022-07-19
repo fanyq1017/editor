@@ -30,7 +30,8 @@
       @save="articleSave"
     >
     </mavonEditor>
-    <el-button @click="getArticle"> 请求</el-button>
+
+     <div class="post"><el-button style="box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 12px 0px;" @click="articleSave"> 发布资讯</el-button></div>
   </el-container>
 </template>
 
@@ -38,26 +39,22 @@
 <script>
 import { mavonEditor } from "mavon-editor";
 import { postRequest } from "../../utils/api";
-import  {getRequest} from "../../utils/api"
+import { getRequest } from "../../utils/api";
 import { uploadFileRequest } from "../../utils/api";
-import axios from "axios";
 import "mavon-editor/dist/css/index.css";
 export default {
   name: "MarkdownEditor",
   components: { mavonEditor },
   mounted() {
-    var id = this.$route.query.id
-    var _this = this
-    if(id != null && id != '' && id != undefined){
-
-      getRequest("/article/query?id=" + id).then(
-        (response) => {
-          if(response.data.state == 200){
-            _this.article = response.data.data
-            _this.mdContent = response.data.data.mdContent
-        }}
-      )
-
+    var id = this.$route.query.id;
+    var _this = this;
+    if (id != null && id != "" && id != undefined) {
+      getRequest("/article/query?id=" + id).then((response) => {
+        if (response.data.state == 200) {
+          _this.article = response.data.data;
+          _this.mdContent = response.data.data.mdContent;
+        }
+      });
     }
   },
 
@@ -65,12 +62,16 @@ export default {
     return {
       options: [
         {
+          label: "全部",
+          value: -1,
+        },
+        {
           label: "志愿风采",
-          value: "1",
+          value: 1,
         },
         {
           label: "信息动态",
-          value: "2",
+          value: 2,
         },
       ],
       content: "",
@@ -126,22 +127,6 @@ export default {
 
       console.log("已保存");
     },
-
-    getArticle() {
-      console.log("点我");
-      var params = { aid: 2 };
-      axios({
-        method: "GET",
-        url: "http://10.134.48.4:8080/article/2",
-      }).then(
-        (response) => {
-          console.log(response.data.data);
-        },
-        (error) => {
-          console.log("error");
-        }
-      );
-    },
   },
 };
 </script>
@@ -149,11 +134,18 @@ export default {
 
 <style  scoped>
 .post-article > .header {
-  background-color: #ececec;
+  background-color: #fff;
   margin-top: 0;
   padding-left: 5px;
   display: flex;
   justify-content: flex-start;
+}
+.post{
+  /* width:100px; */
+  margin-right: 0;
+  margin-left: auto;
+  margin-top:0;
+  line-height: 80px;
 }
 </style>
 

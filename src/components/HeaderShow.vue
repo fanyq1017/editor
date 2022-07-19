@@ -10,7 +10,7 @@
           active-text-color="#f6a598"
       >
         <el-menu-item><img src="../assets/logo.jpg" class="user-img"/></el-menu-item>
-        <el-menu-item ><span style="font-size: 20px;font-weight: 500">志 愿 者 服 务 系 统</span></el-menu-item>
+        <el-menu-item ><span style="font-size: 20px;font-weight: 500">志 愿 者 服 务 中 心</span></el-menu-item>
       </el-menu>
     </el-col>
     <el-col :span="12">
@@ -47,8 +47,16 @@
           text-color="#000000"
           active-text-color="#f6a598"
       >
-        <el-menu-item v-if="userName" class="userName">
-
+        <el-menu-item v-if="username" class="userName">
+            <div class="r-content">
+              <el-dropdown trigger="click" style="display:flex;justify-content: right; padding-right:20px;">
+                <i class="el-icon-user" style="padding-top: 20px;size: 80px"></i>
+                <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-item @click="edit">修改个人资料</el-dropdown-item>
+                  <el-dropdown-item @click.native="logOut">退出</el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
+            </div>
         </el-menu-item>
       <el-menu-item v-else type="info" @click="ClickMenu('登录')">登录 / 注册</el-menu-item>
     </el-menu>
@@ -62,11 +70,27 @@
 export default {
   name: "HeaderShow",
   data() {
-    return { activeIndex: "1", activeIndex2: "1" };
+    return { activeIndex: "1", activeIndex2: "1" ,username:{}};
+
+  },
+  mounted() {
+    this.userInfo()
   },
   methods: {
+    edit(){
+
+    },
+    logOut() {
+      this.$store.commit('clearUser')
+      this.$router.push({path:'/login'})
+
+
+    },
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
+    },
+    userInfo() {
+      this.username=this.$store.state.user.username
     },
     ClickMenu(index) {
       console.log(index);
