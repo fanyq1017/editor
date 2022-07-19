@@ -32,7 +32,7 @@
     </el-header>
     <el-table
       ref="multipleTable"
-      :data="users"
+      :data="activities"
       tooltip-effect="dark"
       style="width: 100%; overflow-x: hidden; overflow-y: hidden"
       max-height="1200"
@@ -41,25 +41,41 @@
     >
       <el-table-column type="selection" width="35" align="left">
       </el-table-column>
-      <el-table-column label="用户名" width="400" align="left">
+      <el-table-column label="活动名称" width="400" align="left">
         <template slot-scope="scope"
           ><span
             style="color: #409eff; cursor: pointer"
             @click="itemClick(scope.row)"
-            >{{ scope.row.username }}</span
+            >{{ scope.row.pname }}</span
           >
         </template>
       </el-table-column>
 
-      <el-table-column label="用户类型" width="120" align="left">
+      <el-table-column label="活动时间" width="240" align="left">
         <template slot-scope="scope"
-          ><span>{{ scope.row.type | getType }}</span>
+          ><span
+            >{{ scope.row.pprojectstart | formatDate }}至{{
+              scope.row.pprojectend | formatDate
+            }}</span
+          >
         </template>
       </el-table-column>
 
+      <el-table-column label="招募时间" width="240" align="left">
+        <template slot-scope="scope"
+          ><span
+            >{{ scope.row.precruitstart | formatDate }}至{{
+              scope.row.precruitend | formatDate
+            }}</span
+          >
+        </template>
+      </el-table-column>
+
+      <el-table-column prop="ppeople" label="负责人" width="120" align="left">
+      </el-table-column>
       <el-table-column
-        prop="telephone"
-        label="电话号码"
+        prop="ptelephone"
+        label="负责人电话"
         width="120"
         align="left"
       >
@@ -84,7 +100,7 @@
       <el-button
         type="danger"
         style="margin: 0px; height: 40px"
-        v-show="this.users.length > 0"
+        v-show="this.activities.length > 0"
         :disabled="this.selItems.length == 0"
         @click="deleteMany"
         >批量删除
@@ -101,91 +117,173 @@
     </div>
 
     <el-dialog
-      title="用户注册"
-      :visible.sync="addUserShow"
+      title="创建志愿活动"
+      :visible.sync="addActivityShow"
       center
-      width="400px"
+      width="800px"
     >
-      <el-form :rules="rules" label-position="left" :model="regForm">
-        <el-form-item
-          prop="account"
-          label="用户名"
-          :label-width="formLabelWidth"
-        >
-          <el-input v-model="regForm.username" autocomplete="off"></el-input>
+      <el-form ref="form" label-width="120px" style="width: 100%">
+        <el-form-item label="活动名称">
+          <el-input v-model="activity.pName"></el-input>
         </el-form-item>
-        <el-form-item
-          prop="checkPass"
-          label="密码"
-          :label-width="formLabelWidth"
-        >
+        <el-form-item label="活动类型">
+          <el-select v-model="activity.pType" placeholder="请选择活动类型">
+            <el-option label="社区服务" value="0"></el-option>
+            <el-option label="平安综治" value="1"></el-option>
+            <el-option label="文明风尚" value="2"></el-option>
+            <el-option label="平安综治" value="3"></el-option>
+            <el-option label="卫生健康" value="4"></el-option>
+            <el-option label="环境保护" value="5"></el-option>
+          </el-select>
+        </el-form-item>
+
+        <el-form-item label="活动地点">
+          <regin-selector @changeregin="changeregin($event)"> </regin-selector>
+        </el-form-item>
+        <el-form-item label="详细地址">
+          <el-input v-model="activity.pLocation"></el-input>
+        </el-form-item>
+
+        <el-form-item label="活动时间">
+          <el-col :span="24">
+            <el-date-picker
+              v-model="value1"
+              type="daterange"
+              format="yyyy 年 MM 月 dd 日"
+              value-format="yyyy-MM-dd"
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              style="width: 100%"
+            ></el-date-picker>
+          </el-col>
+        </el-form-item>
+
+        <el-form-item label="招募时间">
+          <el-col :span="24">
+            <el-date-picker
+              v-model="value2"
+              type="daterange"
+              format="yyyy 年 MM 月 dd 日"
+              value-format="yyyy-MM-dd"
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              style="width: 100%"
+            ></el-date-picker>
+          </el-col>
+        </el-form-item>
+        <el-form-item label="服务对象">
+          <el-input v-model="activity.pServeclient"></el-input>
+        </el-form-item>
+        <el-form-item label="负责人">
+          <el-input v-model="activity.pPeople"></el-input>
+        </el-form-item>
+        <el-form-item label="负责人电话号码">
+          <el-input v-model="activity.pTelephone"></el-input>
+        </el-form-item>
+
+        <el-form-item label="活动封面">
+          <el-input v-model="activity.pImage"></el-input>
+        </el-form-item>
+
+        <el-form-item label="活动描述">
           <el-input
-            type="password"
-            v-model="regForm.password"
-            autocomplete="off"
+            type="textarea"
+            autosize
+            v-model="activity.pInfo"
           ></el-input>
         </el-form-item>
-        <el-form-item
-          prop="checkPhone"
-          label="电话号码"
-          :label-width="formLabelWidth"
-        >
-          <el-input v-model="regForm.telephone" autocomplete="off"></el-input>
-        </el-form-item>
       </el-form>
+
       <div slot="footer" class="dialog-footer">
-        <el-button @click="addUserShow = false">取 消</el-button>
-        <el-button type="primary" @click="register">注册</el-button>
+        <el-button @click="addActivityShow = false">取 消</el-button>
+        <el-button type="primary" @click="submit">注册</el-button>
       </div>
     </el-dialog>
     <el-dialog
-      title="编辑用户信息"
-      :visible.sync="editUserShow"
+      title="编辑活动信息"
+      :visible.sync="editActivityShow"
       center
-      width="400px"
+      width="800px"
     >
-      <el-form :rules="rules" label-position="left" :model="editForm">
-        <el-form-item
-          prop="account"
-          label="用户名"
-          :label-width="formLabelWidth"
-        >
-          <el-input v-model="editForm.username" autocomplete="off"></el-input>
+        <el-form ref="form" label-width="120px" style="width: 100%" :model="editForm">
+        <el-form-item label="活动名称">
+          <el-input v-model="editForm.pname"></el-input>
         </el-form-item>
-        <el-form-item
-          prop="checkPass"
-          label="密码"
-          :label-width="formLabelWidth"
-        >
+        <el-form-item label="活动类型">
+          <el-select v-model="editForm.ptype" placeholder="请选择活动类型">
+            <el-option label="社区服务" :value="0"></el-option>
+            <el-option label="平安综治" :value="1"></el-option>
+            <el-option label="文明风尚" :value="2"></el-option>
+            <el-option label="平安综治" :value="3"></el-option>
+            <el-option label="卫生健康" :value="4"></el-option>
+            <el-option label="环境保护" :value="5"></el-option>
+          </el-select>
+        </el-form-item>
+
+        <el-form-item label="活动地点">
+          <regin-selector @changeregin="changeregin($event)"> </regin-selector>
+        </el-form-item>
+        <el-form-item label="详细地址">
+          <el-input v-model="editForm.plocation"></el-input>
+        </el-form-item>
+
+        <el-form-item label="活动时间">
+          <el-col :span="24">
+            <el-date-picker
+              v-model="value1"
+              type="daterange"
+              format="yyyy 年 MM 月 dd 日"
+              value-format="yyyy-MM-dd"
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              style="width: 100%"
+            ></el-date-picker>
+          </el-col>
+        </el-form-item>
+
+        <el-form-item label="招募时间">
+          <el-col :span="24">
+            <el-date-picker
+              v-model="value2"
+              type="daterange"
+              format="yyyy 年 MM 月 dd 日"
+              value-format="yyyy-MM-dd"
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              style="width: 100%"
+            ></el-date-picker>
+          </el-col>
+        </el-form-item>
+        <el-form-item label="服务对象">
+          <el-input v-model="editForm.pserveclient"></el-input>
+        </el-form-item>
+        <el-form-item label="负责人">
+          <el-input v-model="editForm.ppeople"></el-input>
+        </el-form-item>
+        <el-form-item label="负责人电话号码">
+          <el-input v-model="editForm.ptelephone"></el-input>
+        </el-form-item>
+
+        <el-form-item label="活动封面">
+          <el-input v-model="editForm.pimage"></el-input>
+        </el-form-item>
+
+        <el-form-item label="活动描述">
           <el-input
-            type="password"
-            v-model="editForm.password"
-            autocomplete="off"
+            type="textarea"
+            autosize
+            v-model="editForm.pinfo"
           ></el-input>
         </el-form-item>
-        <el-form-item
-          prop="checkPhone"
-          label="电话号码"
-          :label-width="formLabelWidth"
-        >
-          <el-input v-model="editForm.telephone" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item
-          prop="checkUserType"
-          label="电话号码"
-          :label-width="formLabelWidth"
-        >
-        <div></div>
-          <div>
-            <el-select v-model="editForm.type" placeholder="请选择用户类型">
-              <el-option label="普通用户" :value="0"></el-option>
-              <el-option label="管理员" :value="1"></el-option>
-            </el-select>
-          </div>
-        </el-form-item>
       </el-form>
+
+
       <div slot="footer" class="dialog-footer">
-        <el-button @click="editUserShow = false">取 消</el-button>
+        <el-button @click="editActivityShow = false">取 消</el-button>
         <el-button type="primary" @click="confirmEdit">确认修改</el-button>
       </div>
     </el-dialog>
@@ -196,11 +294,13 @@
 
 
 <script>
+import reginSelector from "../activity/ReginSelector.vue";
 import { getRequest } from "../../utils/api";
 import { putRequest } from "../../utils/api";
 import { postRequest } from "../../utils/api";
 export default {
   name: "ManageActivity",
+  components: { reginSelector },
   data() {
     return {
       rules: {
@@ -213,29 +313,65 @@ export default {
           { required: true, message: "请选择用户类型", trigger: "blur" },
         ],
       },
-      activities:[],
+      activities: [],
       users: [],
+
+      activity: {
+        pId: "-1",
+        pImage: "",
+        pName: "",
+        pType: "",
+        pLocation: "",
+        pProjectstart: "",
+        pProjectend: "",
+        pRecruitstart: "",
+        pRecruitend: "",
+        pServeclient: "",
+        pInfo: "",
+        pPeople: "",
+        pTelephone: "",
+        pProvinceregioncode: "",
+        pCityregioncode: "",
+        pDistrictregioncode: "",
+      },
+      value1: "",
+      value2: "",
+
       currentPage: 1,
       totalCount: -1,
       pageSize: 10,
       keywords: "",
       type: "-1",
       state: "1",
+
       selItems: [],
       dustbinData: [],
-      addUserShow: false,
-      editUserShow: false,
+      addActivityShow: false,
+      editActivityShow: false,
+
       regForm: {
         username: " ",
         password: " ",
         telephone: " ",
       },
+
       editForm: {
-        uId :'',
-        username: "",
-        password: "",
-        telephone: "",
-        type: 0,
+        pid: "-1",
+        pimage: "",
+        pname: "",
+        ptype: "",
+        plocation: "",
+        pprojectstart: "",
+        pprojectend: "",
+        precruitstart: "",
+        precruitend: "",
+        pserveclient: "",
+        pinfo: "",
+        ppeople: "",
+        ptelephone: "",
+        pprovinceregioncode: "",
+        pcityregioncode: "",
+        pdistrictregioncode: "",
       },
     };
   },
@@ -243,23 +379,29 @@ export default {
   mounted() {
     var _this = this;
     console.log("mouted");
-    this.loadUsers(1, _this.pageSize);
+    this.loadActivities(1, _this.pageSize);
   },
 
   methods: {
+    changeregin(data) {
+      this.region = data;
+      this.activity.pProvinceregioncode = data[0];
+      this.activity.pCityregioncode = data[1];
+      this.activity.pDistrictregioncode = data[2];
+    },
     currentChange(currentPage) {
       this.currentPage = currentPage;
 
-      this.loadUsers(currentPage, this.pageSize);
+      this.loadActivities(currentPage, this.pageSize);
     },
 
-    loadUsers(page, count) {
+    loadActivities(page, count) {
       var _this = this;
-      var url = "/listUser?page=" + page + "&count=" + count;
+      var url = "/project/queryAll?page=" + page + "&count=" + count;
 
       console.log(url);
       getRequest(url).then((response) => {
-        _this.users = response.data.data.records;
+        _this.activities = response.data.data.records;
         _this.totalCount = response.data.data.total;
       });
     },
@@ -267,27 +409,27 @@ export default {
       this.selItems = val;
     },
     handleEdit(index, row) {
-      this.editForm.uId = row.uid
-      this.editForm.username = row.username;
-      this.editForm.password = row.password;
-      this.editForm.type = row.type;
-      this.editForm.telephone = row.telephone;
-      this.editUserShow = true;
+
+      
+      this.editForm = row
+          console.log(this.editForm)
+      this.editActivityShow = true;
     },
     handleDelete(index, row) {
       console.log(index);
       console.log(row);
-      this.dustbinData.push(row.uid);
-      console.log(this.dustbinData);
+      var tdustbin = []
+      tdustbin.push(row.pid);
+      console.log(tdustbin);
       var _this = this;
-      postRequest("/deleteUser", {
-        uIds: _this.dustbinData,
+      postRequest("/project/deletec", {
+        pIds: tdustbin,
       }).then(
         (response) => {
           console.log(response.data.data);
           if (response.data.state == 200) {
             alert("删除成功");
-            this.loadUsers(_this.currentPage, _this.pageSize);
+            this.loadActivities(_this.currentPage, _this.pageSize);
           } else {
             alert("删除失败");
           }
@@ -304,18 +446,18 @@ export default {
       var selItems = this.selItems;
       console.log(selItems);
       for (var i = 0; i < selItems.length; i++) {
-        this.dustbinData.push(selItems[i].uid);
+        this.dustbinData.push(selItems[i].pid);
       }
       var _this = this;
       console.log(this.dustbinData);
-      postRequest("/deleteUser", {
-        uIds: _this.dustbinData,
+      postRequest("/project/delete", {
+        pIds: _this.dustbinData,
       }).then(
         (response) => {
           console.log(response.data.data);
           if (response.data.state == 200) {
             alert("删除成功");
-            _this.loadUsers(_this.currentPage, _this.pageSize);
+            _this.loadActivities(_this.currentPage, _this.pageSize);
           } else {
             alert("删除失败");
           }
@@ -327,7 +469,7 @@ export default {
       );
     },
     addUser() {
-      this.addUserShow = true;
+      this.addActivityShow = true;
     },
     register() {
       var _this = this;
@@ -344,8 +486,8 @@ export default {
           console.log(response.data.data);
           if (response.data.state == 200) {
             alert("添加成功");
-            _this.addUserShow = false;
-            _this.loadUsers(_this.currentPage, _this.pageSize);
+            _this.addActivityShow = false;
+            _this.loadActivities(_this.currentPage, _this.pageSize);
           } else {
             alert("添加失败");
           }
@@ -357,30 +499,52 @@ export default {
       );
     },
 
-    confirmEdit(){
-      var _this = this
+    confirmEdit() {
+      var _this = this;
 
-      console.log(this.editForm)
+      console.log(this.editForm);
 
-      postRequest('/amendProfile',_this.editForm).then(
+      postRequest("/amendProfile", _this.editForm).then(
         (response) => {
-          if(response.data.state == 200){
-              alert("修改成功")
-              _this.loadUsers(_this.currentPage, _this.pageSize);
-              _this.editUserShow = false
-          }
-          else{
-            alert("修改失败")
+          if (response.data.state == 200) {
+            alert("修改成功");
+            _this.loadActivities(_this.currentPage, _this.pageSize);
+            _this.editActivityShow = false;
+          } else {
+            alert("修改失败");
           }
         },
         (error) => {
-          console.log(error)
-          alert("修改失败")
+          console.log(error);
+          alert("修改失败");
         }
-      )
+      );
+    },
 
+    submit() {
+      this.activity.pProjectstart = this.value1[0];
+      this.activity.pProjectend = this.value1[1];
+      this.activity.pRecruitstart = this.value2[0];
+      this.activity.pRecruitend = this.value2[1];
+      var _this = this;
 
-    }
+      postRequest("/project/add", _this.activity).then(
+        (response) => {
+          console.log(response.data.data);
+          if (response.data.state == 200) {
+            aler("创建成功");
+            _this.addActivityShow = false;
+            _this.loadActivities(_this.currentPage, _this.pageSize);
+          } else {
+            alert("添加失败");
+          }
+        },
+        (error) => {
+          console.log(error);
+          alert("添加失败");
+        }
+      );
+    },
   },
 };
 </script>
@@ -398,5 +562,19 @@ export default {
 }
 .eheader {
   background-color: #fff;
+}
+
+.el-dialog__header {
+  margin: 0;
+  padding: 0;
+  height: 100px;
+}
+
+.el-dialog__title {
+  padding: 0;
+  margin: 0;
+  line-height: 10px;
+  font-size: 18px;
+  color: #303133;
 }
 </style>

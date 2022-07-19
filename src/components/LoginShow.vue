@@ -88,7 +88,7 @@
   </div>
 </template>
 <script>
-import  {postRequest}  from "../utils/api"
+import { postRequest } from "../utils/api";
 import axios from "axios";
 export default {
   data() {
@@ -120,34 +120,37 @@ export default {
     submitClick: function () {
       var _this = this;
 
-
-      postRequest('/login', {username : this.loginForm.username , password : this.loginForm.password}).then(
+      postRequest("/login", {
+        username: this.loginForm.username,
+        password: this.loginForm.password,
+      }).then(
         (response) => {
-          if(response.data.state == 200){
-            let user = {uId:'',username:'', type:''}
-            user.uId =response.data.data.uId
-            console.log('登录成功')
-            user.username = response.data.data.username
-            user.type = response.data.data.type
-            _this.$store.commit('setUser', user)
-            _this.$router.push({path: '/manage'})
- 
+          if (response.data.state == 200) {
+            console.log(response.data.data);
+            let user = { uid: "", username: "", type: "" };
+            user.uid = response.data.data.uid;
+            console.log("登录成功");
+            alert("登录成功");
+            user.username = response.data.data.username;
+            user.type = response.data.data.type;
+            _this.$store.commit("setUser", user);
 
-            
+            if (user.type == "1" || user.type == "2") {
+              _this.$router.push({ path: "/manage" });
+            }
 
+            if (user.type == "0") {
+              _this.$router.push({ path: "/home" });
+            }
           }
-          console.log("123")
-          console.log(response.data.data)
+          console.log("123");
+          console.log(response.data.data);
         },
         (error) => {
-          console.log(error)
+          console.log(error);
         }
-      )
-
-
-
+      );
     },
-
 
     register() {
       let data = {
@@ -158,7 +161,7 @@ export default {
 
       console.log(data);
 
-      postRequest('/register', data).then(
+      postRequest("/register", data).then(
         (response) => {
           console.log(response.data.data);
         },
