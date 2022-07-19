@@ -26,12 +26,14 @@ export default {
         }]
     })
     let vm = this;
+    vm.__proto__.player = player;//将player挂载到vm原型上
+    vm.__proto__.i = i;//将当前视频下标挂载到原型上
     player.on('ended',function(){
         i++;
         if(i >= vm.videos.length) i = 0;
         this.src({type:'video/mp4',src:vm.videos[i].url});
-        console.log(i);
         this.play();
+        vm.$emit('func',i);//修改导航栏
     })
   },
   data(){
@@ -39,10 +41,19 @@ export default {
         videos:[
             {url:require("../../assets/oobe-intro.mp4")},
             {url:require("../../assets/trailer.mp4")},
-            {url:require("../../assets/oobe-intro.mp4")},
         ]
     }
   },
+  props:{
+    Index:Number
+  },
+  watch:{
+    Index(val){//导航栏改变视频链接
+        this.i = val;
+        this.player.src({type:'video/mp4',src:this.videos[this.i].url});
+        this.player.play();
+    }
+  }
 }
 </script>
 
