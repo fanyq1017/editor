@@ -22,33 +22,21 @@
       </el-row>
       <el-row style="padding-left: 80px;padding-right: 80px;padding-top: 20px">
         <el-col :span="16">
-        <el-form ref="form" :model="form" label-width="80px">
+        <el-form ref="form" :model="hdform" label-width="80px">
           <el-form-item label="姓名" style="width: 480px">
-            <el-input v-model="form.name"></el-input>
+            <el-input v-model="hdform.name"></el-input>
           </el-form-item>
-          <el-form-item label="所在地">
-            <el-select v-model="form.region" placeholder="请选择所在地">
-              <el-option label="区域一" value="shanghai"></el-option>
-              <el-option label="区域二" value="beijing"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="求助时间">
-            <el-col :span="11">
-              <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
-            </el-col>
-            <el-col class="line" :span="2">-</el-col>
-            <el-col :span="11">
-              <el-time-picker placeholder="选择时间" v-model="form.date2" style="width: 100%;"></el-time-picker>
-            </el-col>
+          <el-form-item label="联系方式" style="width: 480px">
+            <el-input v-model="hdform.phonenum"></el-input>
           </el-form-item>
           <el-form-item label="求助性质">
-            <el-checkbox-group v-model="form.type">
-              <el-checkbox label="经济援助" name="type"></el-checkbox>
-              <el-checkbox label="法律援助" name="type"></el-checkbox>
-            </el-checkbox-group>
+            <el-radio-group v-model="hdform.type">
+              <el-radio v-model="radio" label="0" name="type">经济援助</el-radio>
+              <el-radio v-model="radio" label="1" name="type">法律援助</el-radio>
+            </el-radio-group>
           </el-form-item>
           <el-form-item label="求助内容">
-            <el-input type="textarea" v-model="form.desc"></el-input>
+            <el-input type="textarea" v-model="hdform.desc" placeholder="请填写所在地、时间、具体帮扶内容等信息"></el-input>
           </el-form-item>
           <el-form-item style="padding-left: 300px">
             <el-button type="danger" plain round @click="onSubmit">立即求助</el-button>
@@ -64,33 +52,18 @@
       </el-row>
       <el-row style="padding-left: 80px;padding-right: 80px;padding-top: 20px">
         <el-col :span="16">
-          <el-form ref="form" :model="form" label-width="80px">
+          <el-form ref="form" :model="hform" label-width="80px">
             <el-form-item label="姓名" style="width: 480px">
-              <el-input v-model="form.name"></el-input>
-            </el-form-item>
-            <el-form-item label="所在地">
-              <el-select v-model="form.region" placeholder="请选择所在地">
-                <el-option label="区域一" value="shanghai"></el-option>
-                <el-option label="区域二" value="beijing"></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="意向时间">
-              <el-col :span="11">
-                <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
-              </el-col>
-              <el-col class="line" :span="2">-</el-col>
-              <el-col :span="11">
-                <el-time-picker placeholder="选择时间" v-model="form.date2" style="width: 100%;"></el-time-picker>
-              </el-col>
+              <el-input v-model="hform.name"></el-input>
             </el-form-item>
             <el-form-item label="帮扶性质">
-              <el-checkbox-group v-model="form.type">
-                <el-checkbox label="经济援助" name="type"></el-checkbox>
-                <el-checkbox label="法律援助" name="type"></el-checkbox>
-              </el-checkbox-group>
+              <el-radio-group v-model="hform.type">
+                <el-radio label="0" name="type">经济援助</el-radio>
+                <el-radio label="1" name="type">法律援助</el-radio>
+              </el-radio-group>
             </el-form-item>
-            <el-form-item label="帮扶理由及技能">
-              <el-input type="textarea" v-model="form.desc"></el-input>
+            <el-form-item label="帮扶理由">
+              <el-input type="textarea" v-model="hform.desc"></el-input>
             </el-form-item>
             <el-form-item style="padding-left: 300px">
               <el-button type="danger" plain round @click="onSubmit">意向帮扶</el-button>
@@ -103,23 +76,45 @@
 </template>
 
 <script>
+import {postRequest} from "@/utils/api";
+
 export default {
   name: "weHelp",
   data() {
     return {
-      form: {
+      hdform: {
         name: '',
-        region: '',
-        date1: '',
-        date2: '',
-        type: [],
+        phonenum:'',
+        type:{
+          return:{
+            radio:'0'
+          }
+        },
+        desc: ''
+      },
+      hform: {
+        name: '',
+        type: {
+          return: {
+            radio:'0'
+          }
+        },
         desc: ''
       }
     }
   },
   methods: {
-    onSubmit() {
-      console.log('submit!');
+    onSubmit: function () {
+      var _this = this;
+
+      postRequest('/help/addHelp', {hHelped: _this.hdform.name, hType: _this.hdform.type,hIntro: _this.hdform.desc,hHelpedtel:_this.hdform.phonenum}).then(
+          (response) => {
+            console.log(response.data.state + " " + response.data.data)
+          },
+          (error) => {
+            console.log(error)
+          }
+      )
     }
   }
 }
