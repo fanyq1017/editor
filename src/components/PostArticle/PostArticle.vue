@@ -1,6 +1,6 @@
 <template>
   <el-container class="post-article">
-    <el-header class="header">
+    <el-header class="header" >
       <el-select
         v-model="article.type"
         placeholder="请选择"
@@ -30,7 +30,10 @@
       @save="articleSave"
     >
     </mavonEditor>
-    <el-button @click="getArticle"> 请求</el-button>
+
+
+    
+    <el-button @click="articleSave"> 发布资讯</el-button>
   </el-container>
 </template>
 
@@ -40,7 +43,6 @@ import { mavonEditor } from "mavon-editor";
 import { postRequest } from "../../utils/api";
 import  {getRequest} from "../../utils/api"
 import { uploadFileRequest } from "../../utils/api";
-import axios from "axios";
 import "mavon-editor/dist/css/index.css";
 export default {
   name: "MarkdownEditor",
@@ -127,21 +129,7 @@ export default {
       console.log("已保存");
     },
 
-    getArticle() {
-      console.log("点我");
-      var params = { aid: 2 };
-      axios({
-        method: "GET",
-        url: "http://10.134.48.4:8080/article/2",
-      }).then(
-        (response) => {
-          console.log(response.data.data);
-        },
-        (error) => {
-          console.log("error");
-        }
-      );
-    },
+
   },
 };
 </script>
@@ -149,7 +137,7 @@ export default {
 
 <style  scoped>
 .post-article > .header {
-  background-color: #ececec;
+  background-color: #fff;
   margin-top: 0;
   padding-left: 5px;
   display: flex;

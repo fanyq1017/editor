@@ -207,12 +207,17 @@
       center
       width="800px"
     >
-        <el-form ref="form" label-width="120px" style="width: 100%" :model="editForm">
+      <el-form
+        ref="form"
+        label-width="120px"
+        style="width: 100%"
+        :model="editForm"
+      >
         <el-form-item label="活动名称">
-          <el-input v-model="editForm.pname"></el-input>
+          <el-input v-model="editForm.pName"></el-input>
         </el-form-item>
         <el-form-item label="活动类型">
-          <el-select v-model="editForm.ptype" placeholder="请选择活动类型">
+          <el-select v-model="editForm.pType" placeholder="请选择活动类型">
             <el-option label="社区服务" :value="0"></el-option>
             <el-option label="平安综治" :value="1"></el-option>
             <el-option label="文明风尚" :value="2"></el-option>
@@ -226,13 +231,13 @@
           <regin-selector @changeregin="changeregin($event)"> </regin-selector>
         </el-form-item>
         <el-form-item label="详细地址">
-          <el-input v-model="editForm.plocation"></el-input>
+          <el-input v-model="editForm.pLocation"></el-input>
         </el-form-item>
 
         <el-form-item label="活动时间">
           <el-col :span="24">
             <el-date-picker
-              v-model="value1"
+              v-model="value3"
               type="daterange"
               format="yyyy 年 MM 月 dd 日"
               value-format="yyyy-MM-dd"
@@ -247,7 +252,7 @@
         <el-form-item label="招募时间">
           <el-col :span="24">
             <el-date-picker
-              v-model="value2"
+              v-model="value4"
               type="daterange"
               format="yyyy 年 MM 月 dd 日"
               value-format="yyyy-MM-dd"
@@ -259,28 +264,27 @@
           </el-col>
         </el-form-item>
         <el-form-item label="服务对象">
-          <el-input v-model="editForm.pserveclient"></el-input>
+          <el-input v-model="editForm.pServeclient"></el-input>
         </el-form-item>
         <el-form-item label="负责人">
-          <el-input v-model="editForm.ppeople"></el-input>
+          <el-input v-model="editForm.pPeople"></el-input>
         </el-form-item>
         <el-form-item label="负责人电话号码">
-          <el-input v-model="editForm.ptelephone"></el-input>
+          <el-input v-model="editForm.pTelephone"></el-input>
         </el-form-item>
 
         <el-form-item label="活动封面">
-          <el-input v-model="editForm.pimage"></el-input>
+          <el-input v-model="editForm.pImage"></el-input>
         </el-form-item>
 
         <el-form-item label="活动描述">
           <el-input
             type="textarea"
             autosize
-            v-model="editForm.pinfo"
+            v-model="editForm.pInfo"
           ></el-input>
         </el-form-item>
       </el-form>
-
 
       <div slot="footer" class="dialog-footer">
         <el-button @click="editActivityShow = false">取 消</el-button>
@@ -336,6 +340,8 @@ export default {
       },
       value1: "",
       value2: "",
+      value3: "",
+      value4: "",
 
       currentPage: 1,
       totalCount: -1,
@@ -356,22 +362,22 @@ export default {
       },
 
       editForm: {
-        pid: "-1",
-        pimage: "",
-        pname: "",
-        ptype: "",
-        plocation: "",
-        pprojectstart: "",
-        pprojectend: "",
-        precruitstart: "",
-        precruitend: "",
-        pserveclient: "",
-        pinfo: "",
-        ppeople: "",
-        ptelephone: "",
-        pprovinceregioncode: "",
-        pcityregioncode: "",
-        pdistrictregioncode: "",
+        pId: "-1",
+        pImage: "",
+        pName: "",
+        pType: "",
+        pLocation: "",
+        pProjectstart: "",
+        pProjectend: "",
+        pRecruitstart: "",
+        pRecruitend: "",
+        pServeclient: "",
+        pInfo: "",
+        pPeople: "",
+        pTelephone: "",
+        pProvinceregioncode: "",
+        pCityregioncode: "",
+        pDistrictregioncode: "",
       },
     };
   },
@@ -409,16 +415,28 @@ export default {
       this.selItems = val;
     },
     handleEdit(index, row) {
+      console.log("row: ")
+      console.log(row)
+      console.log('-------------------------------')
+
+      this.editForm.pId = row.pid;
+      
+      this.editForm.pImage = row.pimage;
+      this.editForm.pInfo = row.pinfo;
+      this.editForm.pName = row.pname;
+      this.editForm.pPeople= row.ppeople;
+      this.editForm.pServeclient = row.pserveclient;
+      this.editForm.pType = row.ptype;
+      this.editForm.pTelephone = row.ptelephone;
+      this.editForm.pLocation = row.plocation;
 
       
-      this.editForm = row
-          console.log(this.editForm)
       this.editActivityShow = true;
     },
     handleDelete(index, row) {
       console.log(index);
       console.log(row);
-      var tdustbin = []
+      var tdustbin = [];
       tdustbin.push(row.pid);
       console.log(tdustbin);
       var _this = this;
@@ -471,40 +489,17 @@ export default {
     addUser() {
       this.addActivityShow = true;
     },
-    register() {
-      var _this = this;
-      let data = {
-        username: this.regForm.username,
-        password: this.regForm.password,
-        telephone: this.regForm.telephone,
-      };
-
-      console.log(data);
-
-      postRequest("/register", data).then(
-        (response) => {
-          console.log(response.data.data);
-          if (response.data.state == 200) {
-            alert("添加成功");
-            _this.addActivityShow = false;
-            _this.loadActivities(_this.currentPage, _this.pageSize);
-          } else {
-            alert("添加失败");
-          }
-        },
-        (error) => {
-          console.log(error);
-          alert("添加失败");
-        }
-      );
-    },
 
     confirmEdit() {
       var _this = this;
 
+      this.editForm.pProjectstart = this.value3[0];
+      this.editForm.pProjectend = this.value3[1];
+      this.editForm.pRecruitstart = this.value4[0];
+      this.editForm.pRecruitend = this.value4[1];
       console.log(this.editForm);
 
-      postRequest("/amendProfile", _this.editForm).then(
+      postRequest("/project/update", _this.editForm).then(
         (response) => {
           if (response.data.state == 200) {
             alert("修改成功");

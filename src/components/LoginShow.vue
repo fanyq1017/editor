@@ -143,11 +143,14 @@ export default {
               _this.$router.push({ path: "/home" });
             }
           }
-          console.log("123");
-          console.log(response.data.data);
+          else{
+            alert("登录失败")
+          }
+
         },
         (error) => {
           console.log(error);
+          alert("登录失败")
         }
       );
     },

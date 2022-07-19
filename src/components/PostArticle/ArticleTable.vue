@@ -1,23 +1,35 @@
 <template>
   <div>
-    <div style="display: flex; justify-content: flex-start; height: 100px">
-      <el-input
-        placeholder="通过标题搜索该分类下的博客..."
-        prefix-icon="el-icon-search"
-        v-model="keywords"
-        style="width: 400px"
-        size="mini"
-      >
-      </el-input>
-      <el-button
-        type="primary"
-        icon="el-icon-search"
-        size="mini"
-        style="margin-left: 3px"
-        @click="searchClick"
-        >搜索
-      </el-button>
-    </div>
+    <el-header class="eheader">
+      <div style="display: flex; justify-content: flex-start; height: ">
+        <el-col span="">
+          <el-input
+            placeholder="通过活动名搜索"
+            prefix-icon="el-icon-search"
+            v-model="keywords"
+            style="width: 400px; height: 80px"
+          >
+          </el-input>
+        </el-col>
+        <el-col>
+          <el-button
+            type="primary"
+            icon="el-icon-search"
+            style="margin-top: 0; padding-top: 0; height: 70px"
+            @click="searchClick"
+            >搜索
+          </el-button>
+        </el-col>
+        <el-col offset="10" span="5">
+          <el-button
+            type="primary"
+            @click="addUser"
+            style="margin-top: 0; padding-top: 0; height: 70px"
+            >+新增</el-button
+          >
+        </el-col>
+      </div>
+    </el-header>
     <el-table
       ref="multipleTable"
       :data="articles"
@@ -177,7 +189,7 @@ export default {
         this.dustbinData.push(selItems[i].id);
       }
       var _this = this;
-      console.log(this.dustbinData)
+      console.log(this.dustbinData);
       postRequest("/article/dustbin", {
         aids: _this.dustbinData,
         state: "1",
