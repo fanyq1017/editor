@@ -1,6 +1,6 @@
 <template>
   <div class="r-content">
-    <el-dropdown trigger="click">
+    <el-dropdown trigger="click" style="display:flex;justify-content: right; padding-right:20px;">
       <span><img class="user" :src="userImg" /></span>
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item @click="edit">修改个人资料</el-dropdown-item>
@@ -37,4 +37,5 @@ export default {
   height: 40px;
   border-radius: 50%;
 }
+
 </style>

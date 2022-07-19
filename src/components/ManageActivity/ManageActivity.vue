@@ -34,7 +34,7 @@
       ref="multipleTable"
       :data="activities"
       tooltip-effect="dark"
-      style="width: 100%; overflow-x: hidden; overflow-y: hidden"
+      style="width: 100%; overflow-x: hidden; overflow-y: hidden; height:800px;"
       max-height="1200"
       @selection-change="handleSelectionChange"
       v-loading="loading"

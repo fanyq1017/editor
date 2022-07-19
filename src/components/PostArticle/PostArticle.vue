@@ -31,7 +31,7 @@
     >
     </mavonEditor>
 
-    <el-button @click="articleSave"> 发布资讯</el-button>
+     <div class="post"><el-button style="box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 12px 0px;" @click="articleSave"> 发布资讯</el-button></div>
   </el-container>
 </template>
 
@@ -139,6 +139,13 @@ export default {
   padding-left: 5px;
   display: flex;
   justify-content: flex-start;
+}
+.post{
+  /* width:100px; */
+  margin-right: 0;
+  margin-left: auto;
+  margin-top:0;
+  line-height: 80px;
 }
 </style>
 

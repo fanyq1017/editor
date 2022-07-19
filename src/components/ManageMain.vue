@@ -1,5 +1,5 @@
 <template>
-  
+  <div class="Main">
     <el-container  style="height : 100%">
       <el-aside width="auto">
 
@@ -8,16 +8,16 @@
 
       </el-aside>
       <el-container>
-        <el-header>
+        <el-header class="mHeader">
           <manage-header></manage-header>
         </el-header>
-        <el-main>
+        <el-main class="mmain">
           <router-view> </router-view>
 
         </el-main>
       </el-container>
     </el-container>
-  
+  </div>
 </template>
 
 
@@ -32,6 +32,15 @@ export default {
 };
 </script>
 
+<style scoped>
+.mHeader{
+  background-color: #545c64;
+}
+.mmain{
+  background-color: rgb(223, 242, 236);
+}
+</style>
+
 
 
 
@@ -39,6 +48,9 @@ export default {
 
 
 <style>
+  .Main{
+    height:100%;
+  }
 
   .el-header, .el-footer {
     background-color: #B3C0D1;
@@ -54,6 +66,7 @@ export default {
     color: #333;
     text-align: center;
     line-height: 160px;
+    height:800px;
   }
   
   body > .el-container {

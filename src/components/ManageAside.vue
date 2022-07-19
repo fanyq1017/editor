@@ -1,6 +1,6 @@
 <template>
   <div class="ManageAside">
-    <div>志愿服务后台管理</div>
+    <div class="manage">后台管理</div>
     <el-menu
       default-active="2"
       class="el-menu-vertical-demo"
@@ -94,5 +94,11 @@ h3 {
   text-align: center;
   line-height: 200px;
   height: 100%;
+}
+.manage{
+  font-weight: 600;
+  font-size: larger;
+  line-height: 100px;
+  color: #FFF;
 }
 </style>
