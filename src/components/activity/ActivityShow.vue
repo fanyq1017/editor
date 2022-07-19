@@ -47,8 +47,8 @@
                     <div class="exit" @click="closeMoreInfo">X</div>
                     <h5 style="margin-bottom:8px;font-weight: bold;">{{this.info_state.info.pname}}</h5>
                     <div class="info-detail">活动地点：{{this.info_state.info.plocation}}</div>
-                    <div class="info-detail">活动开始时间：{{this.info_state.info.pprojectstart}}</div>
-                    <div class="info-detail">活动结束时间：{{this.info_state.info.pprojectend}}</div>
+                    <div class="info-detail">活动开始时间：{{this.info_state.info.pprojectstart | formatDateTime}}</div>
+                    <div class="info-detail">活动结束时间：{{this.info_state.info.pprojectend | formatDateTime}}</div>
                     <div class="info-detail">联系电话：{{this.info_state.info.ptelephone}}</div>
                     
                 </div>
@@ -162,7 +162,7 @@ export default {
                 this.selectedRegions.push(regin.value);
 
                 document.getElementById('regins-third').style.display = 'none';
-                if (regin.children.length > 1) {
+                if (regin.children.length > 0) {
                     // console.log(typeof document.getElementById('regins-second'));
                     document.getElementById('regins-second').style.display = 'block';
                 }
@@ -198,7 +198,7 @@ export default {
                 cur_second_dom.className = 'regin-second active';
                 this.selectedRegions.push(regin.value);
 
-                if (regin.children.length > 1) {
+                if (regin.children.length > 0) {
                     // console.log(typeof document.getElementById('regins-third'));
                     document.getElementById('regins-third').style.display = 'block';
                 }
@@ -233,10 +233,11 @@ export default {
                 this.selectedRegions.push(regin.value);
             }
 
-            this.loadNewEvents(selectedRegions[0], selectedRegions[1], selectedRegions[2], 5, 1);
+            this.loadNewEvents(this.selectedRegions[0], this.selectedRegions[1], this.selectedRegions[2], 5, 1);
         },
         loadNewEvents(regin0, regin1, regin2, count, page) {
             var url = '/project/query?provinceRegionCode='+ regin0 +'&cityRegionCode='+ regin1 +'&districtRegionCode='+ regin2 +'&page='+ page +'&count=' + count;
+            console.log(url);
             var _this = this;
             getRequest(url).then(
                 (response) => {

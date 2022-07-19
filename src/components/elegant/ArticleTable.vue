@@ -1,27 +1,14 @@
 <template>
 <div class="row">
   <div class="article-container">
-    <h4 class="container-title">信息动态</h4>
+    <h4 class="container-title">志愿风采</h4>
     <ul class="article-list">
-      <li v-for="article in articles.slice(0, 6)" class="article-info">
+      <li v-for="article in articles" class="article-info">
         <div class="title" @click="handleClick(article.id)">{{ article.title }}</div>
         <div class="date">{{ article.publishDate  | formatDateTime}}</div>
       </li>
     </ul>
-    <h4 class="container-title">专题活动</h4>
-    <ul class="article-list">
-      <li v-for="article in articles.slice(6, 11)" class="article-info">
-        <div class="title">{{ article.title }}</div>
-        <div class="date">{{ article.publishDate  | formatDateTime}}</div>
-      </li>
-    </ul>
-    <h4 class="container-title">公益广告</h4>
-    <ul class="article-list">
-      <li v-for="article in articles.slice(11, 16)" class="article-info">
-        <div class="title">{{ article.title }}</div>
-        <div class="date">{{ article.publishDate  | formatDateTime}}</div>
-      </li>
-    </ul>
+
 
   </div>
 
@@ -86,7 +73,8 @@ export default {
                  console.log(response.data.data);
                 _this.articles = response.data.data.records;
             }
-        )
+        );
+        console.log(articles[0]);
     },
   methods:
   {
