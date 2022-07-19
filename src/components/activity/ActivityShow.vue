@@ -162,7 +162,7 @@ export default {
                 this.selectedRegions.push(regin.value);
 
                 document.getElementById('regins-third').style.display = 'none';
-                if (regin.children.length > 1) {
+                if (regin.children.length > 0) {
                     // console.log(typeof document.getElementById('regins-second'));
                     document.getElementById('regins-second').style.display = 'block';
                 }
@@ -198,7 +198,7 @@ export default {
                 cur_second_dom.className = 'regin-second active';
                 this.selectedRegions.push(regin.value);
 
-                if (regin.children.length > 1) {
+                if (regin.children.length > 0) {
                     // console.log(typeof document.getElementById('regins-third'));
                     document.getElementById('regins-third').style.display = 'block';
                 }
@@ -233,10 +233,11 @@ export default {
                 this.selectedRegions.push(regin.value);
             }
 
-            this.loadNewEvents(selectedRegions[0], selectedRegions[1], selectedRegions[2], 5, 1);
+            this.loadNewEvents(this.selectedRegions[0], this.selectedRegions[1], this.selectedRegions[2], 5, 1);
         },
         loadNewEvents(regin0, regin1, regin2, count, page) {
             var url = '/project/query?provinceRegionCode='+ regin0 +'&cityRegionCode='+ regin1 +'&districtRegionCode='+ regin2 +'&page='+ page +'&count=' + count;
+            console.log(url);
             var _this = this;
             getRequest(url).then(
                 (response) => {
