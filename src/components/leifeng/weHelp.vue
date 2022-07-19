@@ -109,7 +109,9 @@ export default {
 
       postRequest('/help/addHelp', {hHelped: _this.hdform.name, hType: _this.hdform.type,hIntro: _this.hdform.desc,hHelpedtel:_this.hdform.phonenum}).then(
           (response) => {
-            console.log(response.data.state + " " + response.data.data)
+            console.log(response.data.state + " " + response.data.data);
+            console.log("发布成功");
+            alert("发布成功");
           },
           (error) => {
             console.log(error)

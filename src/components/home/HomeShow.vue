@@ -15,7 +15,7 @@
     <el-col :span="10" offset="2" >
       <el-carousel height="450px">
         <el-carousel-item v-for="item in carousel_items" :key="item.url">
-          <img v-if="item.url"
+          <img style="width: 100%" v-if="item.url"
               :src=item.url>
         </el-carousel-item>
       </el-carousel>
@@ -49,12 +49,20 @@
     </el-col>
     <el-col>
       <el-divider></el-divider>
+    </el-col>
+    <el-col offset="1">
       <EchartsMap/>
     </el-col>
     <el-col>
       <el-divider></el-divider>
+    </el-col>
+    <el-col offset="2">
       <VideoContent/>
     </el-col>
+    <el-col>
+      <el-divider></el-divider>
+    </el-col>
+
   </el-row>
 </template>
 
