@@ -8,7 +8,9 @@
 
       </el-aside>
       <el-container>
-        <el-header>Header</el-header>
+        <el-header>
+          <manage-header></manage-header>
+        </el-header>
         <el-main>
           <router-view> </router-view>
 
@@ -22,10 +24,11 @@
 
 <script>
 import ManageAside from './ManageAside.vue'
+import ManageHeader from './ManageHeader'
 
 export default {
   name: "ManageMain",
-  components: {ManageAside}
+  components: {ManageAside, ManageHeader}
 };
 </script>
 
