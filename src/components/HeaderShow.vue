@@ -33,9 +33,6 @@
         <el-menu-item index="4" @click="ClickMenu('雷锋热线')"
         >雷锋热线</el-menu-item
         >
-        <el-menu-item index="5" @click="ClickMenu('编辑测试')"
-          >编辑测试</el-menu-item
-        >
       </el-menu>
     </el-col>
     <el-col :span ="2">

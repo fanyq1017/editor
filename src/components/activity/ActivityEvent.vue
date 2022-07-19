@@ -1,15 +1,14 @@
 <template>
     <div class="good-item">
-        <div>
+        <div style="width: 100%; height: 50%; border:none;">
             <a class="good-img">
                 <!-- <img v-lazy="msg.activityImg" :alt="msg.activityName" :key="msg.activityImg" /> -->
-                <img src="../../assets/a.jpeg" />
+                <img :src="msg.pimage" />
             </a>
         </div>
-        <h6 class="good-title" v-html="msg.title"></h6>
-        <h3 class="sub-title ellipsis">{{msg.activityInfo}}</h3>
+        <h4 class="good-title" v-html="msg.pname"></h4>
         <div class="ds pa">
-            <y-button text="查看详情" style="margin: 0 5px; margin-top: 10%;"></y-button>
+            <y-button @btnClick="handleClick" text="查看详情" style="margin: 0 5px; margin-top: 20%;"></y-button>
         </div>
     </div>
 </template>
@@ -21,10 +20,25 @@
         props:{
             msg:{
 
-            }
+            },
+            info_state:
+            {
+                active:false,
+                info:{}
+            },
         },
         components: {
           YButton
+        },
+        methods:
+        {
+          handleClick()
+          {
+            console.log("handleClick");
+            this.info_state.active = true;
+            this.info_state.info = this.msg;
+            console.log('info_state in child: ' + this.info_state.info.pname + ' ' + this.info_state.active);
+          }
         }
     }
 </script>
@@ -42,13 +56,14 @@
 }
 
 .good-item {
-    background: rgba(248, 248, 248, 0.5);
+    background: rgba(255, 247, 244, 0.7);
     width: 25%;
     transition: all .5s;
     height: 430px;
     &:hover {
       transform: translateY(-3px);
       box-shadow: 1px 1px 20px #999;
+      background-color: rgba(255, 69, 0, 0.3);
       .good-price p {
         display: none;
       }
@@ -83,7 +98,7 @@
       line-height: 1.2;
       font-size: 16px;
       color: #424242;
-      margin: 0 auto;
+      margin-top: 30px;
       padding: 0 14px;
       text-align: center;
       overflow: hidden;
@@ -95,6 +110,5 @@
       color: #d0d0d0;
       padding: 10px;
     }
-
   }
 </style>

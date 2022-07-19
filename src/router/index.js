@@ -17,12 +17,6 @@ const routes = [
 
             },
             {
-                path: '/editor',
-                name: 'editor',
-                component: () => import('../components/MarkdownEditor')
-
-            },
-            {
                 path: '/message',
                 name: 'message',
                 component: () => import('../components/message/MessageShow.vue')
@@ -47,7 +41,7 @@ const routes = [
             {
                 path: '/video',
                 name:'video',
-                component:() => import('../components/video/VideoNavMenu')
+                component:() => import('../components/video/VideoNavMenu.vue')
             }
         ]
     },
