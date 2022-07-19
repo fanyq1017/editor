@@ -1,10 +1,10 @@
 <template>
   <div id="VideoContent">
-    <div class="VMenuWarp item">
+    <div class="VMenuWarp item" style="padding-left: 10px">
       <VideoNavMenu class="VMenu"></VideoNavMenu>
     </div>
     <div class="VideoWarp item">
-      <Video class="Video"></Video>      
+      <Video class="Video"></Video>
     </div>
   </div>
 </template>
@@ -20,7 +20,7 @@ export default {
     }
 }
 </script>
-  
+
 <style>
 #VideoContent{
   display: flex;

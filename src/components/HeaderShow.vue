@@ -47,7 +47,10 @@
           text-color="#000000"
           active-text-color="#f6a598"
       >
-      <el-menu-item v-if="" type="info" @click="ClickMenu('登录')">登录 / 注册</el-menu-item>
+        <el-menu-item v-if="userName" class="userName">
+
+        </el-menu-item>
+      <el-menu-item v-else type="info" @click="ClickMenu('登录')">登录 / 注册</el-menu-item>
     </el-menu>
     </el-col>
   </el-row>

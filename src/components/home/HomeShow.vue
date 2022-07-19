@@ -49,12 +49,20 @@
     </el-col>
     <el-col>
       <el-divider></el-divider>
+    </el-col>
+    <el-col offset="1">
       <EchartsMap/>
     </el-col>
     <el-col>
       <el-divider></el-divider>
+    </el-col>
+    <el-col offset="2">
       <VideoContent/>
     </el-col>
+    <el-col>
+      <el-divider></el-divider>
+    </el-col>
+
   </el-row>
 </template>
 
