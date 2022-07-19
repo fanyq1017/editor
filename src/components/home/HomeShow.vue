@@ -21,8 +21,8 @@
       </el-carousel>
     </el-col>
     <el-col :span="10">
-      <el-row style="padding-top: 10px">
-        <el-col :span="10">
+      <el-row style="padding-top: 10px;">
+        <el-col :span="10" >
           <img src="../../assets/toutiao.png"><span class="leadnews" style="padding-left: 20px">文明XX新闻动态</span>
         </el-col>
         <el-col :span="2" offset="10" style="padding-top: 10px">
