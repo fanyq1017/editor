@@ -34,9 +34,8 @@
       ref="multipleTable"
       :data="users"
       tooltip-effect="dark"
-      style="width: 100%; overflow-x: hidden; overflow-y: hidden; height: 800px;"
+      style="width: 100%; overflow-x: hidden; overflow-y: hidden; height: 800px"
       max-height="1200"
-      
       @selection-change="handleSelectionChange"
       v-loading="loading"
     >
@@ -176,7 +175,7 @@
           label="电话号码"
           :label-width="formLabelWidth"
         >
-        <div></div>
+          <div></div>
           <div>
             <el-select v-model="editForm.type" placeholder="请选择用户类型">
               <el-option label="普通用户" :value="0"></el-option>
@@ -232,7 +231,7 @@ export default {
         telephone: " ",
       },
       editForm: {
-        uId :'',
+        uId: "",
         username: "",
         password: "",
         telephone: "",
@@ -264,11 +263,29 @@ export default {
         _this.totalCount = response.data.data.total;
       });
     },
+    searchClick() {
+      var data = { username: "", page: "1", count: "5" };
+      data.username= this.keywords;
+
+      var _this = this;
+      var url = "/searchUsername";
+      console.log(url);
+      postRequest(url, data).then(
+        (response) => {
+          console.log(response.data);
+          _this.users = response.data.data.records;
+          _this.totalCount = response.data.data.total;
+        },
+        (error) => {
+          console.log("失败");
+        }
+      );
+    },
     handleSelectionChange(val) {
       this.selItems = val;
     },
     handleEdit(index, row) {
-      this.editForm.uId = row.uid
+      this.editForm.uId = row.uid;
       this.editForm.username = row.username;
       this.editForm.password = row.password;
       this.editForm.type = row.type;
@@ -279,7 +296,7 @@ export default {
       console.log(index);
       console.log(row);
 
-      var tdustbin = []
+      var tdustbin = [];
       tdustbin.push(row.uid);
       console.log(tdustbin);
       var _this = this;
@@ -360,30 +377,27 @@ export default {
       );
     },
 
-    confirmEdit(){
-      var _this = this
+    confirmEdit() {
+      var _this = this;
 
-      console.log(this.editForm)
+      console.log(this.editForm);
 
-      postRequest('/amendProfile',_this.editForm).then(
+      postRequest("/amendProfile", _this.editForm).then(
         (response) => {
-          if(response.data.state == 200){
-              alert("修改成功")
-              _this.loadUsers(_this.currentPage, _this.pageSize);
-              _this.editUserShow = false
-          }
-          else{
-            alert("修改失败")
+          if (response.data.state == 200) {
+            alert("修改成功");
+            _this.loadUsers(_this.currentPage, _this.pageSize);
+            _this.editUserShow = false;
+          } else {
+            alert("修改失败");
           }
         },
         (error) => {
-          console.log(error)
-          alert("修改失败")
+          console.log(error);
+          alert("修改失败");
         }
-      )
-
-
-    }
+      );
+    },
   },
 };
 </script>

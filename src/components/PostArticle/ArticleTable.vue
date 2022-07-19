@@ -158,6 +158,29 @@ export default {
         _this.totalCount = response.data.data.total;
       });
     },
+    searchClick() {
+      var data = { pName: "", page: "1", count: "5" };
+      data.title = this.keywords;
+
+      var _this = this;
+      var url = '/article/queryTitle'
+      console.log(url);
+      postRequest(url,data).then(
+        (response) => {
+          console.log(response.data)
+        _this.articles = response.data.data.records;
+        _this.totalCount = response.data.data.total;
+      },
+      (error) => {
+        console.log("失败")
+
+
+
+      }
+      
+      
+      );
+    },
     handleSelectionChange(val) {
       this.selItems = val;
     },
@@ -174,11 +197,22 @@ export default {
       console.log(this.dustbinData);
       var _this = this;
       postRequest("/article/dustbin", {
-        aids: _this.dustbinData,
+        aIds: _this.dustbinData,
         state: "1",
-      }).then((response) => {
-        console.log(response.data.data);
-      });
+      }).then(
+        (response) => {
+          if (response.data.state == 200) {
+            alert("删除成功");
+          } else {
+            alert("删除失败");
+          }
+          console.log(response.data.data);
+          console.log("sc");
+        },
+        (error) => {
+          alert("删除失败");
+        }
+      );
     },
     deleteMany() {
       console.log("deleteMany");
@@ -191,7 +225,7 @@ export default {
       var _this = this;
       console.log(this.dustbinData);
       postRequest("/article/dustbin", {
-        aids: _this.dustbinData,
+        aIds: _this.dustbinData,
         state: "1",
       }).then((response) => {
         console.log(response.data.data);
@@ -211,5 +245,8 @@ export default {
   padding-bottom: 0px;
   margin-bottom: 0px;
   justify-content: space-between;
+}
+.eheader{
+  background-color: #fff;
 }
 </style>

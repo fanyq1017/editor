@@ -7,8 +7,12 @@
         <div class="title" @click="handleClick(article.id)">{{ article.title }}</div>
         <div class="date">{{ article.publishDate  | formatDateTime}}</div>
       </li>
-    </ul>
 
+      
+
+    </ul>
+    
+    
 
   </div>
 

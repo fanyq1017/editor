@@ -107,21 +107,29 @@ export default {
       let data = {
         id: this.article.id,
         title: this.article.title,
-        uid: 100,
+        uid: this.$store.state.user.uid,
         mdContent: this.article.mdContent,
         htmlContent: this.$refs.md.d_render,
         state: "1",
-        type: "1",
+        type: this.article.type,
+        nickname: this.$store.state.user.username
       };
 
       console.log(data);
 
-      postRequest("/article/addArticle", da).then(
+      postRequest("/article/addArticle", data).then(
         (response) => {
+          if (response.data.state == 200){
+            alert('发布成功')
+          }
+          else{
+            alert('发布失败')
+          }
           console.log(response);
         },
         (error) => {
           console.log(error);
+          alert('发布失败')
         }
       );
 

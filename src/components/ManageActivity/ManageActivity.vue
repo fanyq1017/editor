@@ -34,7 +34,7 @@
       ref="multipleTable"
       :data="activities"
       tooltip-effect="dark"
-      style="width: 100%; overflow-x: hidden; overflow-y: hidden; height:800px;"
+      style="width: 100%; overflow-x: hidden; overflow-y: hidden; height: 800px"
       max-height="1200"
       @selection-change="handleSelectionChange"
       v-loading="loading"
@@ -411,26 +411,43 @@ export default {
         _this.totalCount = response.data.data.total;
       });
     },
+    searchClick() {
+      var data = { pName: "", page: "1", count: "10" };
+      data.pName = this.keywords;
+
+      var _this = this;
+      var url = "/project/searchProject";
+      console.log(url);
+      postRequest(url, data).then(
+        (response) => {
+          console.log(response.data);
+          _this.activities = response.data.data.records;
+          _this.totalCount = response.data.data.total;
+        },
+        (error) => {
+          console.log("失败");
+        }
+      );
+    },
     handleSelectionChange(val) {
       this.selItems = val;
     },
     handleEdit(index, row) {
-      console.log("row: ")
-      console.log(row)
-      console.log('-------------------------------')
+      console.log("row: ");
+      console.log(row);
+      console.log("-------------------------------");
 
       this.editForm.pId = row.pid;
-      
+
       this.editForm.pImage = row.pimage;
       this.editForm.pInfo = row.pinfo;
       this.editForm.pName = row.pname;
-      this.editForm.pPeople= row.ppeople;
+      this.editForm.pPeople = row.ppeople;
       this.editForm.pServeclient = row.pserveclient;
       this.editForm.pType = row.ptype;
       this.editForm.pTelephone = row.ptelephone;
       this.editForm.pLocation = row.plocation;
 
-      
       this.editActivityShow = true;
     },
     handleDelete(index, row) {
