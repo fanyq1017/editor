@@ -17,6 +17,7 @@
         :total="totalCount"
         @current-change="currentChange"
         v-show="this.articles.length > 0"
+        style="position:absolute;top:1050px;left:400px;"
       >
       </el-pagination>
     </div>
