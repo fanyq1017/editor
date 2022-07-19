@@ -34,6 +34,11 @@ const routes = [
                 component:() => import('../components/article/ArticleDetail.vue')
             },
             {
+                path: '/elegant',
+                name:'activity',
+                component:() => import('../components/elegant/MessageShow.vue')
+            },
+            {
                 path: '/wehelp',
                 name:'wehelp',
                 component:() => import('../components/leifeng/weHelp')

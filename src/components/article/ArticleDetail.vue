@@ -1,5 +1,5 @@
 <template>
-  <el-row v-loading="loading">
+  <el-row v-loading="loading" class="show-range">
     <el-col :span="24">
       <div style="text-align: left">
         <el-button
@@ -83,6 +83,8 @@ export default {
   background: rgba(255, 255, 255, 0.6);
   padding: 15px;
   margin-bottom: 20px;
+  backdrop-filter: blur(6px);
+  box-shadow: 2px 2px 20px #999;
 }
 
 h2 {
@@ -93,5 +95,11 @@ h2 {
   margin-inline-start: 0px;
   margin-inline-end: 0px;
   font-weight: bold;
+}
+.show-range {
+    background-image: url(../../assets/bk.webp);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-attachment: fixed;
 }
 </style>

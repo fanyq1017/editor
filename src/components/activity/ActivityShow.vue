@@ -47,8 +47,8 @@
                     <div class="exit" @click="closeMoreInfo">X</div>
                     <h5 style="margin-bottom:8px;font-weight: bold;">{{this.info_state.info.pname}}</h5>
                     <div class="info-detail">活动地点：{{this.info_state.info.plocation}}</div>
-                    <div class="info-detail">活动开始时间：{{this.info_state.info.pprojectstart}}</div>
-                    <div class="info-detail">活动结束时间：{{this.info_state.info.pprojectend}}</div>
+                    <div class="info-detail">活动开始时间：{{this.info_state.info.pprojectstart | formatDateTime}}</div>
+                    <div class="info-detail">活动结束时间：{{this.info_state.info.pprojectend | formatDateTime}}</div>
                     <div class="info-detail">联系电话：{{this.info_state.info.ptelephone}}</div>
                     
                 </div>

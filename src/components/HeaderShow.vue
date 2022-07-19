@@ -30,7 +30,10 @@
         <el-menu-item index="3" @click="ClickMenu('信息动态')"
           >信息动态</el-menu-item
         >
-        <el-menu-item index="4" @click="ClickMenu('雷锋热线')"
+        <el-menu-item index="4" @click="ClickMenu('志愿风采')"
+          >志愿风采</el-menu-item
+        >
+        <el-menu-item index="5" @click="ClickMenu('雷锋热线')"
         >雷锋热线</el-menu-item
         >
       </el-menu>
@@ -91,6 +94,12 @@ export default {
             console.log("点击信息动态")
           this.$router.push({
             path: "/message",
+          });
+          break;
+        case "志愿风采":
+            console.log("点击信息动态")
+          this.$router.push({
+            path: "/elegant",
           });
           break;
         case "雷锋热线":
