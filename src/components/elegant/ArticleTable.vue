@@ -21,7 +21,7 @@
       <h4 class="container-title">热点信息</h4>
       <ul class="article-list">
         <li v-for="article in articles.slice(0, 3)" class="article-info">
-          <div class="title">{{ article.title }}</div>
+          <div class="title" @click="handleClick(article.id)">{{ article.title }}</div>
           <div class="date">{{ article.publishDate | formatDateTime }}</div>
         </li>
       </ul>

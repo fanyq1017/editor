@@ -11,14 +11,14 @@
     <h4 class="container-title">专题活动</h4>
     <ul class="article-list">
       <li v-for="article in articles.slice(6, 11)" class="article-info">
-        <div class="title">{{ article.title }}</div>
+        <div class="title" @click="handleClick(article.id)">{{ article.title }}</div>
         <div class="date">{{ article.publishDate  | formatDateTime}}</div>
       </li>
     </ul>
     <h4 class="container-title">公益广告</h4>
     <ul class="article-list">
       <li v-for="article in articles.slice(11, 16)" class="article-info">
-        <div class="title">{{ article.title }}</div>
+        <div class="title" @click="handleClick(article.id)">{{ article.title }}</div>
         <div class="date">{{ article.publishDate  | formatDateTime}}</div>
       </li>
     </ul>
