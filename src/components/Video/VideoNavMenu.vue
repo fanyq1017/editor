@@ -9,8 +9,8 @@
       <el-radio-button :label="false" >展开</el-radio-button>
       <el-radio-button :label="true" >收起</el-radio-button>
     </el-radio-group>
-    <el-menu 
-      default-active="0"
+    <el-menu
+      :default-active="defaultActive"
       class="el-menu-vertical-demo"
       @open="handleOpen"
       @close="handleClose"
@@ -18,13 +18,20 @@
       active-text-color="#FF7356"
       background-color="#FFFFFF"
       >
-      <el-submenu index="0">
+      <el-submenu index="-1">
         <template slot="title">
           <i class="el-icon-location"></i>
           <span slot="title">视频列表</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item :index="i" v-for="(p,i) in videos" :key="i">视频{{i+1}}</el-menu-item>
+          <el-menu-item 
+          :index="i" 
+          v-for="(p,i) in videos" 
+          :key="i" 
+          @click.native="setIndex(i)"
+          >
+          视频{{i+1}}
+          </el-menu-item>
         </el-menu-item-group>
       </el-submenu>
     </el-menu>
@@ -37,8 +44,9 @@
       return {
         isCollapse: false,//是否水平折叠
         videos:[
-          {},{},{},{},{},{},{},{}
-        ]
+          {},{}
+        ],
+        defaultActive:0
       };
     },
     methods: {
@@ -47,6 +55,17 @@
       },
       handleClose(key, keyPath) {
         console.log(key, keyPath);
+      },
+      setIndex(index){
+        this.$emit('func',index);
+      }
+    },
+    props:{
+      Index:Number
+    },
+    watch:{
+      Index(val){
+        this.defaultActive = val;
       }
     }
   }
