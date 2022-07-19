@@ -68,6 +68,7 @@ export default {
   background: rgba(255, 255, 255, 0.6);
   padding: 15px;
   margin-bottom: 20px;
+  margin-top: 50px;
   backdrop-filter: blur(6px);
   box-shadow: 2px 2px 20px #999;
 }
