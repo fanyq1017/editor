@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-radio-group
+    <el-radio-group 
       v-model="isCollapse"
       text-color="#FFFFFF"
       style="margin-bottom: 20px;"
@@ -9,13 +9,8 @@
       <el-radio-button :label="false" >展开</el-radio-button>
       <el-radio-button :label="true" >收起</el-radio-button>
     </el-radio-group>
-<<<<<<< HEAD
-    <el-menu
-      default-active="1"
-=======
     <el-menu 
       default-active="0"
->>>>>>> 06a3369f00d994f15d7212187c2e0823ccfcad26
       class="el-menu-vertical-demo"
       @open="handleOpen"
       @close="handleClose"
@@ -52,9 +47,6 @@
       },
       handleClose(key, keyPath) {
         console.log(key, keyPath);
-      },
-      showVideo(){
-
       }
     }
   }
