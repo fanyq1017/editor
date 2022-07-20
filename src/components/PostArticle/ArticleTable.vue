@@ -57,12 +57,10 @@
       </el-table-column>
       <el-table-column prop="nickname" label="作者" width="120" align="left">
       </el-table-column>
-      <el-table-column
-        prop="cateName"
-        label="所属分类"
-        width="120"
-        align="left"
-      >
+      <el-table-column label="所属分类" width="120" align="left">
+        <template slot-scope="scope">{{
+          scope.row.type | getArticleType
+        }}</template>
       </el-table-column>
       <el-table-column label="操作" align="left">
         <template slot-scope="scope">
@@ -163,22 +161,17 @@ export default {
       data.title = this.keywords;
 
       var _this = this;
-      var url = '/article/queryTitle'
+      var url = "/article/queryTitle";
       console.log(url);
-      postRequest(url,data).then(
+      postRequest(url, data).then(
         (response) => {
-          console.log(response.data)
-        _this.articles = response.data.data.records;
-        _this.totalCount = response.data.data.total;
-      },
-      (error) => {
-        console.log("失败")
-
-
-
-      }
-      
-      
+          console.log(response.data);
+          _this.articles = response.data.data.records;
+          _this.totalCount = response.data.data.total;
+        },
+        (error) => {
+          console.log("失败");
+        }
       );
     },
     handleSelectionChange(val) {
@@ -246,7 +239,7 @@ export default {
   margin-bottom: 0px;
   justify-content: space-between;
 }
-.eheader{
+.eheader {
   background-color: #fff;
 }
 </style>

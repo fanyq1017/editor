@@ -28,17 +28,33 @@ Vue.filter("formatDateTime", function formatDateTime(value) {
   return year + "-" + month + "-" + day + " " + hours + ":" + minutes;
 });
 Vue.filter("getType", function getType(type) {
- 
+
   var typename = ""
-  if (type ==0 ) {
+  if (type == 0) {
     typename = '普通用户'
   }
-  if (type ==1 ) {
+  if (type == 1) {
     typename = '管理员'
   }
-  if (type ==2 ) {
+  if (type == 2) {
     typename = '超级管理员'
   }
   return typename;
 });
 
+
+
+Vue.filter("getArticleType", function getArticleType(type) {
+
+  var typename = ""
+  if (type == -1) {
+    typename = '全部'
+  }
+  if (type == 1) {
+    typename = '志愿风采'
+  }
+  if (type == 2) {
+    typename = '信息动态'
+  }
+  return typename;
+});
