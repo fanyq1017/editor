@@ -27,14 +27,11 @@
         <i class="el-icon-menu"></i>
         <span slot="title">志愿活动管理</span>
       </el-menu-item>
-      <el-menu-item index="用户管理" @click="ClickMenu('用户管理')">
+      <el-menu-item index="用户管理" @click="ClickMenu('用户管理')"   v-if="userShow">
         <i class="el-icon-menu"></i>
         <span slot="title">用户管理</span>
       </el-menu-item>
-      <el-menu-item index="4">
-        <i class="el-icon-setting"></i>
-        <span slot="title">导航四</span>
-      </el-menu-item>
+
     </el-menu>
   </div>
 </template>
@@ -46,6 +43,14 @@
 export default {
   name: "ManageAside",
 
+  data() {
+    return {
+      userShow: (this.$store.state.user.type == '2') ? true : false
+
+
+
+    }
+  },
   methods: {
     ClickMenu(index) {
       console.log(index);

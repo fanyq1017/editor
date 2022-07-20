@@ -54,6 +54,7 @@ const routes = [
         path: '/manage',
         name: 'manage',
         component: () => import('../components/ManageMain'),
+        redirect:'/manage/articletable',
         children: [
             {
                 path: '/manage/postarticle',

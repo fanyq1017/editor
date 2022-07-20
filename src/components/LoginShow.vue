@@ -161,15 +161,24 @@ export default {
         password: this.regForm.password,
         telephone: this.regForm.telephone,
       };
+      var _this = this
 
       console.log(data);
 
       postRequest("/register", data).then(
         (response) => {
           console.log(response.data.data);
+          if(response.data.state == 200){
+            alert('注册成功')
+            _this.dialogFormVisible = false
+          }
+          else{
+            alert("注册失败")
+          }
         },
         (error) => {
           console.log(error);
+          alert("注册失败")
         }
       );
     },
