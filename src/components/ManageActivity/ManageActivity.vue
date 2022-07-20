@@ -457,7 +457,7 @@ export default {
       tdustbin.push(row.pid);
       console.log(tdustbin);
       var _this = this;
-      postRequest("/project/deletec", {
+      postRequest("/project/delete", {
         pIds: tdustbin,
       }).then(
         (response) => {
@@ -544,7 +544,7 @@ export default {
         (response) => {
           console.log(response.data.data);
           if (response.data.state == 200) {
-            aler("创建成功");
+            alert("创建成功");
             _this.addActivityShow = false;
             _this.loadActivities(_this.currentPage, _this.pageSize);
           } else {

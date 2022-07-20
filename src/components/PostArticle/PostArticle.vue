@@ -31,7 +31,14 @@
     >
     </mavonEditor>
 
-     <div class="post"><el-button style="box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 12px 0px;" @click="articleSave"> 发布资讯</el-button></div>
+    <div class="post">
+      <el-button
+        style="box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 12px 0px"
+        @click="articleSave"
+      >
+        发布资讯</el-button
+      >
+    </div>
   </el-container>
 </template>
 
@@ -112,26 +119,42 @@ export default {
         htmlContent: this.$refs.md.d_render,
         state: "1",
         type: this.article.type,
-        nickname: this.$store.state.user.username
+        nickname: this.$store.state.user.username,
       };
 
       console.log(data);
 
-      postRequest("/article/addArticle", data).then(
-        (response) => {
-          if (response.data.state == 200){
-            alert('发布成功')
+      if (data.id == "-1") {
+        postRequest("/article/addArticle", data).then(
+          (response) => {
+            if (response.data.state == 200) {
+              alert("发布成功");
+            } else {
+              alert("发布失败");
+            }
+            console.log(response);
+          },
+          (error) => {
+            console.log(error);
+            alert("发布失败");
           }
-          else{
-            alert('发布失败')
+        );
+      } else {
+        postRequest("/article/amendArticle", data).then(
+          (response) => {
+            if (response.data.state == 200) {
+              alert("修改成功");
+            } else {
+              alert("修改失败");
+            }
+            console.log(response);
+          },
+          (error) => {
+            console.log(error);
+            alert("修改失败");
           }
-          console.log(response);
-        },
-        (error) => {
-          console.log(error);
-          alert('发布失败')
-        }
-      );
+        );
+      }
 
       console.log("已保存");
     },
@@ -148,11 +171,11 @@ export default {
   display: flex;
   justify-content: flex-start;
 }
-.post{
+.post {
   /* width:100px; */
   margin-right: 0;
   margin-left: auto;
-  margin-top:0;
+  margin-top: 0;
   line-height: 80px;
 }
 </style>
